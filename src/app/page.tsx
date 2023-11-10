@@ -2,8 +2,9 @@ import { UserButton } from "@clerk/nextjs"
 
 const HomePage = () => {
   return (
-    <div>page
+    <div>
       <UserButton />
+      <p>AGENDA</p>
     </div>
   )
 }
