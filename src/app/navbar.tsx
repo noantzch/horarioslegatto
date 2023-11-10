@@ -4,6 +4,7 @@ import Logo from '../../public/legato_logo.jpg'
 import Link from "next/link"
 import {AiOutlineMenu, AiOutlineClose} from 'react-icons/ai';
 import { useState } from 'react';
+import { UserButton } from "@clerk/nextjs";
 
 
 const Navbar = () => {
@@ -27,17 +28,22 @@ const Navbar = () => {
             <div className="hidden sm:flex">
                 <ul className="hidden sm:flex">
                     <Link href="/disponibilidad">
-                        <li className="ml-10 suppercase hover:border-b text-xl">Disponibilidad</li>
+                        <li className="ml-10 mt-2 suppercase hover:border-b text-lg">Disponibilidad</li>
                     </Link>
                     <Link href="/asistencias">
-                        <li className="ml-10 suppercase hover:border-b text-xl">Asistencias</li>
+                        <li className="ml-10 mt-2 suppercase hover:border-b text-lg">Asistencias</li>
                     </Link>
                     <Link href="/agenda">
-                        <li className="ml-10 suppercase hover:border-b text-xl">Agenda</li>
+                        <li className="ml-10 mt-2 suppercase hover:border-b text-lg">Agenda</li>
                     </Link>
+
                     <Link href="/asignar">
-                        <li className="ml-10 suppercase hover:border-b text-xl">Asignar Clase</li>
+                        <li className="ml-10 mt-2 suppercase hover:border-b text-lg" title="Sólo administradores pueden asignar clases">Asignar Clase*</li>
                     </Link>
+
+                    <li className="ml-10 mt-2 suppercase hover:border-b text-lg">  
+                        <UserButton />
+                    </li>
                 </ul>
             </div>
             <div onClick={handleNav} className="sm:hidden cursor-pointer pl-24">
@@ -70,6 +76,9 @@ const Navbar = () => {
                     <Link href="/asignar">
                         <li onClick={() =>{ setMenuOpen(false)}} className="py-4 cursor-pointer">Asignar Clase</li>
                     </Link>
+                    <li className="py-4 cursor-pointer">  
+                        <UserButton />
+                    </li>
                 </ul>
             </div>
 

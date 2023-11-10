@@ -41,4 +41,11 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
     
 .NAVBAR
     -tailwind usestate y basics https://www.youtube.com/watch?v=8s4DK5PkRNQ&ab_channel=BrettWestwood-SoftwareEngineer 
-    (falta colocar el clerk en el nav)
+    -title
+.Dashboard:::
+.PENDIENTES DE ASISTENCIA
+    -tabla nombre fecha marcar-asistencia
+    (db)
+
+    -DATABASE:
+    SQL

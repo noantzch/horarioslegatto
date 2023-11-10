@@ -1,10 +1,13 @@
-import { UserButton } from "@clerk/nextjs"
+'use client'
+import Pendientes from "./pendientes"
 
 const HomePage = () => {
   return (
     <div>
-      <UserButton />
-      <p>AGENDA</p>
+      <h3>DASHBOARD</h3>
+      <Pendientes />
+      <p>Calendario Semanal</p>
+      <p>footer</p>
     </div>
   )
 }
