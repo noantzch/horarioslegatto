@@ -43,9 +43,41 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
     -tailwind usestate y basics https://www.youtube.com/watch?v=8s4DK5PkRNQ&ab_channel=BrettWestwood-SoftwareEngineer 
     -title
 .Dashboard:::
-.PENDIENTES DE ASISTENCIA
-    -tabla nombre fecha marcar-asistencia
-    (db)
 
-    -DATABASE:
-    SQL
+    ->ASISTENCIAS PENDIENTES
+    ->SIGUIETNES CLASES
+
+
+
+
+.PENDIENTES
+    -tabla nombre fecha marcar-asistencia
+        ->asistencias pasar de true a false.
+        ->va desapareciendo
+    
+
+    ------------------------DATABASE:--------------------
+    ::::TABLAS:::
+    profesores(nombre:varchar100, apellido:varcahr100, id_disponiblidad:integer, id_instrumento:integer, admin:boolean)
+    alumnos(nombre:string, apellido:string, id_instrumetno:integer)
+    asistencias(id_alumno:integer, id_profesor:integer, asistió,:boolean fecha:date, pendiente: boolean)
+    disponibilidad(id_profesor:integer, id_dia:integer, hora_inicio:time, hora_cierre:time)
+    clases(id_profesor:integer, id_alumno:integer, hora_inicio:time, hora_cierre:time, id_disponibilidad:integer, id_asistencia:integer)
+    instrumentos(instrumento:string)
+    dias(dia:string)
+    ::::::::::::
+    profe-admin agrega ALUMNO Y CLASE, que depende (y afecta a) de la disponiblidad,
+            la CLASE genera todas las asistencias del año
+
+    -----------------------------------------------------------
+    como funciona db:
+
+    SQL ->vercel y crear archivos ts en api/carpeta. con Docs de vercel sql. 
+    en api, creo carpetas y route.ts recibo o envio la información necesaria
+    con async function GET(request: Request) try{await sql`` } catch. Recibo tablas y return NextResponse.json({ RETURNA }, { status: 200 }); 
+                ->  const { searchParams } = new URL(request.url);
+    const id_profesor = searchParams.get('id');  http://localhost:3000/api/asistencia?id=123
+    cree interfaces para respetar sus interiores 
+
+
+
