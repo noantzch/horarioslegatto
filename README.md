@@ -54,7 +54,35 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
     -tabla nombre fecha marcar-asistencia
         ->asistencias pasar de true a false.
         ->va desapareciendo
-    
+.CALENDARIO
+    -se obtiene un obetj o con toras las clases
+        luego se filtra con una funcion las clases
+    -calendario de FULLCALENDAR facil docs
+    -funciones para las clases filtradas adaptarlas al formato que pide fullcalendar
+    -funciones para los horarios
+
+.Disponibilidad
+    -Editar/Agregar Disponibilidad BOTON
+    -Calendario de Clase+Disponibilidad
+
+.Asignar Clase:
+    -Seleccionar Profe
+    -
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     ------------------------DATABASE:--------------------
     ::::TABLAS:::
