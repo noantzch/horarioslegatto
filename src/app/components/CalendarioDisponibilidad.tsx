@@ -1,48 +1,43 @@
 'use client'
-import { filtrarClasesUnicas } from "@/ts/filtroClases"
 import { useEffect, useState } from "react"
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import esLocale from '@fullcalendar/core/locales/es';
-import { transformEvents } from "@/ts/transformEvents";
+import { transformEventsforDisponibilidad } from "@/ts/transformEvents";
 import { getEarliestStartTime } from "@/ts/startAndEndTime";
 import { getLatestEndTime } from "@/ts/startAndEndTime";
 
-const CalendarioSemanal = () => {
-    const [clases, setClases] = useState<Clase[]>([]);
+const CalendarioDisponibilidad = () => {
+    const [disponibilidad, setDisponibilidad] = useState<DisponibilidadCalendario[]>([]);
     const [error, setError] = useState<Error | null>(null);
-    const [clasesUnicas, setClasesUnicas] = useState<Clase[]>([])
     const [events, setEvents] = useState<OutputEvent[]>([]);
     
     const [earliestEventTime, setEarliestEventTime] = useState<string>('09:00');
     const [latestEventTime, setLatestEventTime] = useState<string>('21:00');
     
-
+    //mostrar 
     useEffect(() =>{
         const fetchData = async () => {
             try{
-                const response = await fetch('http://localhost:3000/api/clases?id=1')
+                const response = await fetch('http://localhost:3000/api/disponibilidad?id=1')
                 if(!response.ok){
                     throw new Error('No se pudo obtener');
                 }
                 const data = await response.json();
-                setClases(data.clases)
+                setDisponibilidad(data.disponibilidad)
             }catch(error){
                 setError((error as Error))
             }
         }
         fetchData();
     }, []);
+;
     useEffect(() => {
-        const filtracionDeClases = filtrarClasesUnicas(clases);
-        setClasesUnicas(filtracionDeClases)
-    }, [clases]);
-    useEffect(() => {
-        if(clasesUnicas && clasesUnicas.length > 0){
-            const transformedEvents = transformEvents(clasesUnicas);
+        if(disponibilidad && disponibilidad.length > 0){
+            const transformedEvents = transformEventsforDisponibilidad(disponibilidad);
             setEvents(transformedEvents);
         }
-      }, [clasesUnicas]);
+      }, [disponibilidad]);
 
      useEffect(() =>{
         const eventotemprano = getEarliestStartTime(events)
@@ -55,15 +50,13 @@ const CalendarioSemanal = () => {
      
     
     if(error){
-        return <p>No se asignaron clases todavía</p>
+        return <p>No hay disponibilidad de horarios</p>
     }
   return (
     <div>
-        <h3 className="font-semibold text-lg p-4 text-center ">Calendario Semanal</h3>
-        {events.length > 0 ? 
-        (<div >
-            <FullCalendar 
-            
+        {events.length > 0 ?
+        (<div>
+            <FullCalendar
             hiddenDays={[0, 6]}
             height="auto"
             plugins={[timeGridPlugin]}
@@ -87,9 +80,10 @@ const CalendarioSemanal = () => {
             />
         </div>)
         :
-        (<p>Cargando..</p>)}
+        (<p>No ingresaste disponibilidad todavía</p>)}
+
     </div>
   )
 }
 
-export default CalendarioSemanal
+export default CalendarioDisponibilidad

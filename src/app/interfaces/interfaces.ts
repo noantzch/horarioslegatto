@@ -51,3 +51,19 @@ interface OutputEvent {
     };
 }
 
+interface Disponibilidad {
+  id_dia: number;
+  hora_inicio: string;
+  hora_cierre: string;
+  id_profesor: number;
+}
+
+interface DisponibilidadCalendario {
+  id: number;
+  id_dia: number;
+  dia: string,
+  hora_inicio: string;
+  hora_cierre: string;
+  id_profesor: number;
+  nombre_profesor: string
+}

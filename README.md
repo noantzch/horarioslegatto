@@ -61,10 +61,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
     -funciones para las clases filtradas adaptarlas al formato que pide fullcalendar
     -funciones para los horarios
 
-.Disponibilidad
-    -Editar/Agregar Disponibilidad BOTON
-    -Calendario de Clase+Disponibilidad
+->PONER TODO EN EL INICIO??
 
+.Disponibilidad
+    -Agregar Disponibilidad BOTON post
+    -Calendario de Clase+Disponibilidad
+    -eliminar disponibilidad
+    
 .Asignar Clase:
     -Seleccionar Profe
     -

@@ -28,32 +28,34 @@ const Pendientes = () =>{
     }
     return(
         <div>
-            <div className='relative w-full flex flex-col mb-6 p-5'>
+            <div className='w-full flex flex-col mb-6 p-5'>
               <h2 className='font-semibold text-lg p-4 text-center'>Pendientes de Asistencia</h2>
-                <table className="w-auto">
-                    <thead>
-                        <tr className='border border-solid border-l-o'>
-                            <th className='text-md px-6 py-3'>Fecha</th>
-                            <th className='text-md px-6 py-3'>Alumno</th>
-                            <th className='text-md px-6 py-3'>Confirmación</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {asistencias ?
-                        (asistencias.map((asistencia) => (
-                          <tr key={asistencia.id} className='border border-solid border-l-o' >
-                              <td className='text-md px-6 py-1 text-center'>{formatearFecha(asistencia.fecha)}</td>
-                              <td className='text-md px-6 py-1 text-center'>{asistencia.nombre + " " + asistencia.apellido}</td>
-                              <td className='text-md px-6 py-1 text-center'><PendientesButton asistencia={asistencia}/></td>
-                          </tr>
-                      )))
-                      :
-                      <tr>
-                        <td className=' text-center'>No hay asistencias pendientes</td>
+              <table className="w-auto">
+                <thead>
+                  <tr className='border border-solid border-l-o'>
+                    <th className='text-md px-6 py-3'>Fecha</th>
+                    <th className='text-md px-6 py-3'>Alumno</th>
+                    <th className='text-md px-6 py-3'>Confirmación</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {asistencias ? (
+                    asistencias.map((asistencia) => (
+                      <tr key={asistencia.id} className='border border-solid border-l-o'>
+                        <td className='text-md px-6 py-1 text-center'>{formatearFecha(asistencia.fecha)}</td>
+                        <td className='text-md px-6 py-1 text-center'>{`${asistencia.nombre} ${asistencia.apellido}`}</td>
+                        <td className='text-md px-6 py-1 text-center'><PendientesButton asistencia={asistencia}/></td>
                       </tr>
-                  }
-                    </tbody>
-                </table>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={3} className='text-center'>No hay asistencias pendientes</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+
 
             </div>
             <div>
