@@ -9,6 +9,31 @@ interface Asistencia {
     pendiente: boolean
     // Otras propiedades de la asistencia
   }
+  interface AsistenciaInstrumento {
+    id: number;
+    id_alumno: number;
+    id_profesor: number;
+    asistio: boolean;
+    fecha: string;
+    nombre: string;
+    apellido: string;
+    pendiente: boolean
+    id_instrumento: number;
+    instrumento: string
+  }
+  interface AsistenciaMes {
+    id: number;
+    id_alumno: number;
+    id_profesor: number;
+    asistio: boolean;
+    fecha: string;
+    nombre: string;
+    apellido: string;
+    pendiente: boolean;
+    mes: number;
+    id_instrumento: number;
+    instrumento: string
+  }
   interface Clase {
     id: number;
     id_profesor: number;
@@ -67,3 +92,4 @@ interface DisponibilidadCalendario {
   id_profesor: number;
   nombre_profesor: string
 }
+

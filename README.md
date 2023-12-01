@@ -45,29 +45,28 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 .Dashboard:::
 
     ->ASISTENCIAS PENDIENTES
-    ->SIGUIETNES CLASES
-
-
-
-
-.PENDIENTES
-    -tabla nombre fecha marcar-asistencia
+            .PENDIENTES
+        -tabla nombre fecha marcar-asistencia
         ->asistencias pasar de true a false.
         ->va desapareciendo
-.CALENDARIO
-    -se obtiene un obetj o con toras las clases
+
+    ->AGENDA
+        -se obtiene un obetj o con toras las clases
         luego se filtra con una funcion las clases
     -calendario de FULLCALENDAR facil docs
     -funciones para las clases filtradas adaptarlas al formato que pide fullcalendar
     -funciones para los horarios
-
-->PONER TODO EN EL INICIO??
-
-.Disponibilidad
+        .Disponibilidad
     -Agregar Disponibilidad BOTON post
     -Calendario de Clase+Disponibilidad
     -eliminar disponibilidad
-    
+
+    ->Agregar Disponibilidad
+
+
+## Trabajar con clerk y mi usuario solamente, para quitar el id1 hardcoeado
+-AVERIGUAR EL ID de clerk, agregarlo a la tabla?, tomarlo desde donde para las solicitudes? 
+
 .Asignar Clase:
     -Seleccionar Profe
     -
@@ -84,7 +83,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 
 
-
+OJO CON EL DEPLOY QUE HAY QUE CAMBAIR EL FETCH
 
 
     ------------------------DATABASE:--------------------

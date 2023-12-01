@@ -27,17 +27,13 @@ const Navbar = () => {
             </Link>
             <div className="hidden sm:flex">
                 <ul className="hidden sm:flex">
-                    <Link href="/disponibilidad">
-                        <li className="ml-10 mt-2 suppercase hover:border-b text-lg">Disponibilidad</li>
+                <Link href="/">
+                        <li className="ml-10 mt-2 suppercase hover:border-b text-lg">Inicio</li>
                     </Link>
-                    <Link href="/asistencias">
-                        <li className="ml-10 mt-2 suppercase hover:border-b text-lg">Asistencias</li>
+                    <Link href="/Clases">
+                        <li className="ml-10 mt-2 suppercase hover:border-b text-lg">Clases pasadas</li>
                     </Link>
-                    <Link href="/agenda">
-                        <li className="ml-10 mt-2 suppercase hover:border-b text-lg">Agenda</li>
-                    </Link>
-
-                    <Link href="/asignar">
+                    <Link href="/Asignar">
                         <li className="ml-10 mt-2 suppercase hover:border-b text-lg" title="Sólo administradores pueden asignar clases">Asignar Clase*</li>
                     </Link>
 
@@ -64,16 +60,13 @@ const Navbar = () => {
 
             <div className="flex-col py-4">
                 <ul>
-                    <Link href="/disponibilidad">
-                        <li onClick={() =>{ setMenuOpen(false)}} className="py-4 cursor-pointer">Disponibilidad</li>
+                    <Link href="/">
+                        <li onClick={() =>{ setMenuOpen(false)}} className="py-4 cursor-pointer">Inicio</li>
                     </Link>
-                    <Link href="/asistencias">
-                        <li onClick={() =>{ setMenuOpen(false)}} className="py-4 cursor-pointer">Asistencias</li>
+                    <Link href="/Clases">
+                        <li onClick={() =>{ setMenuOpen(false)}} className="py-4 cursor-pointer">Clases pasadas</li>
                     </Link>
-                    <Link href="/agenda">
-                        <li onClick={() =>{ setMenuOpen(false)}} className="py-4 cursor-pointer">Agenda</li>
-                    </Link>
-                    <Link href="/asignar">
+                    <Link href="/Asignar">
                         <li onClick={() =>{ setMenuOpen(false)}} className="py-4 cursor-pointer">Asignar Clase</li>
                     </Link>
                     <li className="py-4 cursor-pointer">  

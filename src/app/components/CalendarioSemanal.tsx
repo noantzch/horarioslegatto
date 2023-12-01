@@ -7,17 +7,20 @@ import esLocale from '@fullcalendar/core/locales/es';
 import { transformEvents } from "@/ts/transformEvents";
 import { getEarliestStartTime } from "@/ts/startAndEndTime";
 import { getLatestEndTime } from "@/ts/startAndEndTime";
+import { transformEventsforDisponibilidad } from "@/ts/transformEvents";
 
 const CalendarioSemanal = () => {
     const [clases, setClases] = useState<Clase[]>([]);
     const [error, setError] = useState<Error | null>(null);
     const [clasesUnicas, setClasesUnicas] = useState<Clase[]>([])
     const [events, setEvents] = useState<OutputEvent[]>([]);
-    
+    const [events2, setEvents2] = useState<OutputEvent[]>([])
+    const [disponibilidad, setDisponibilidad] = useState<DisponibilidadCalendario[]>([]);
+
     const [earliestEventTime, setEarliestEventTime] = useState<string>('09:00');
     const [latestEventTime, setLatestEventTime] = useState<string>('21:00');
     
-
+    //GET CLASES
     useEffect(() =>{
         const fetchData = async () => {
             try{
@@ -33,25 +36,58 @@ const CalendarioSemanal = () => {
         }
         fetchData();
     }, []);
+    //get disponibilidad
+    useEffect(() =>{
+        const fetchData = async () => {
+            try{
+                const response = await fetch('http://localhost:3000/api/disponibilidad?id=1')
+                if(!response.ok){
+                    throw new Error('No se pudo obtener');
+                }
+                const data = await response.json();
+                setDisponibilidad(data.disponibilidad)
+            }catch(error){
+                setError((error as Error))
+            }
+        }
+        fetchData();
+    }, []);
+
+
+
+
+    //dejar solo clases por semana
     useEffect(() => {
         const filtracionDeClases = filtrarClasesUnicas(clases);
         setClasesUnicas(filtracionDeClases)
     }, [clases]);
+    //formatear para fullcalendar calses
     useEffect(() => {
         if(clasesUnicas && clasesUnicas.length > 0){
             const transformedEvents = transformEvents(clasesUnicas);
             setEvents(transformedEvents);
         }
       }, [clasesUnicas]);
+      //formatear para fullcalendar disponibilidad
+      useEffect(() => {
+        if(disponibilidad && disponibilidad.length > 0){
+            const transformedEvents = transformEventsforDisponibilidad(disponibilidad);
+            setEvents2(transformedEvents);
+        }
+      }, [disponibilidad]);
+
+
 
      useEffect(() =>{
-        const eventotemprano = getEarliestStartTime(events)
+        const allEvents:OutputEvent[] = [...events, ...events2]
+        const eventotemprano = getEarliestStartTime(allEvents)
         setEarliestEventTime(eventotemprano) 
-    }, [events, earliestEventTime])
+    }, [events, earliestEventTime, events2])
     useEffect(() =>{
-        const eventotarde = getLatestEndTime(events)
+        const allEvents:OutputEvent[] = [...events, ...events2]
+        const eventotarde = getLatestEndTime(allEvents)
         setLatestEventTime(eventotarde)
-    }, [events, latestEventTime])
+    }, [events, latestEventTime, events2])
      
     
     if(error){
@@ -68,7 +104,7 @@ const CalendarioSemanal = () => {
             height="auto"
             plugins={[timeGridPlugin]}
             initialView="timeGridWeek"
-            events={events}
+            events={[...events, ...events2]}
             slotDuration="00:20:00" // Duración de cada intervalo de tiempo en la cuadrícula
             allDaySlot={false} // No mostrar eventos de todo el día en esta vista
             slotMinTime = {earliestEventTime}
