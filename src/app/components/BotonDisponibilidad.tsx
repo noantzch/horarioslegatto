@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { getId } from "@/ts/getId";
+import { useUser } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 
 const BotonDisponibilidad = () => {
@@ -18,16 +20,44 @@ const BotonDisponibilidad = () => {
     e.preventDefault();
     postData(); 
   };
-  const handleChange = (dia: number, horaInicio: string, horaCierre: string) =>{
-    setDisponibilidad(
-      {
+  const handleChange = (dia: number, horaInicio: string, horaCierre: string) => {
+    // Asegúrate de que el valor de 'id' esté disponible antes de asignarlo
+    if (!loading) {
+      setDisponibilidad({
         id_dia: dia,
         hora_cierre: horaCierre,
         hora_inicio: horaInicio,
-        id_profesor: 1
-      }
-    );
-  }
+        id_profesor: id || null, // Utiliza el ID obtenido del useEffect
+      });
+    }
+  };
+
+
+   //ID
+ const { user } = useUser();
+ const [loading, setLoading] = useState(true);
+ const [id, setId] = useState<number| null>(null);
+
+ useEffect(() => {
+   const fetchData = async () => {
+     try {
+       if (!user) {
+         return;
+       }
+
+       const userId: string | null = user.id || null;
+       const fetchedId = await getId(userId);
+       setId(fetchedId);
+     } catch (error) {
+       console.error((error as Error).message);
+     } finally {
+       setLoading(false);
+     }
+   };
+
+   fetchData();
+ }, [user]);
+
 
   //post disponibilidad
   const postData = async () => {

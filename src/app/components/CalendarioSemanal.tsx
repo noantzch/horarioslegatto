@@ -8,6 +8,8 @@ import { transformEvents } from "@/ts/transformEvents";
 import { getEarliestStartTime } from "@/ts/startAndEndTime";
 import { getLatestEndTime } from "@/ts/startAndEndTime";
 import { transformEventsforDisponibilidad } from "@/ts/transformEvents";
+import { useUser } from "@clerk/nextjs";
+import { getId } from "@/ts/getId";
 
 const CalendarioSemanal = () => {
     const [clases, setClases] = useState<Clase[]>([]);
@@ -19,39 +21,83 @@ const CalendarioSemanal = () => {
 
     const [earliestEventTime, setEarliestEventTime] = useState<string>('09:00');
     const [latestEventTime, setLatestEventTime] = useState<string>('21:00');
-    
+
+    //ID
+   const { user } = useUser();
+  const [loading, setLoading] = useState(true);
+  const [id, setId] = useState<number| null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!user) {
+          return;
+        }
+
+        const userId: string | null = user.id || null;
+        const fetchedId = await getId(userId);
+        setId(fetchedId);
+      } catch (error) {
+        console.error((error as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [user]);
+
+  
     //GET CLASES
-    useEffect(() =>{
+    useEffect(() => {
         const fetchData = async () => {
-            try{
-                const response = await fetch('http://localhost:3000/api/clases?id=1')
-                if(!response.ok){
-                    throw new Error('No se pudo obtener');
-                }
-                const data = await response.json();
-                setClases(data.clases)
-            }catch(error){
-                setError((error as Error))
+          try {
+            if (id === null || id === undefined) {
+              // Puedes decidir qué hacer si id es null o undefined
+              console.log('Cargando');
+              return;
             }
-        }
+      
+            const response = await fetch(`http://localhost:3000/api/clases?id=${id}`);
+            
+            if (!response.ok) {
+              throw new Error('No se pudo obtener');
+            }
+      
+            const data = await response.json();
+            setClases(data.clases);
+          } catch (error) {
+            setError(error as Error);
+          }
+        };
+      
         fetchData();
-    }, []);
+      }, [id]);
     //get disponibilidad
-    useEffect(() =>{
+    useEffect(() => {
         const fetchData = async () => {
-            try{
-                const response = await fetch('http://localhost:3000/api/disponibilidad?id=1')
-                if(!response.ok){
-                    throw new Error('No se pudo obtener');
-                }
-                const data = await response.json();
-                setDisponibilidad(data.disponibilidad)
-            }catch(error){
-                setError((error as Error))
+          try {
+            if (id === null || id === undefined) {
+              // Puedes decidir qué hacer si id es null o undefined
+              console.log('Cargando');
+              return;
             }
-        }
+      
+            const response = await fetch(`http://localhost:3000/api/disponibilidad?id=${id}`);
+            
+            if (!response.ok) {
+              throw new Error('No se pudo obtener');
+            }
+      
+            const data = await response.json();
+            setDisponibilidad(data.disponibilidad);
+          } catch (error) {
+            setError(error as Error);
+          }
+        };
+      
         fetchData();
-    }, []);
+      }, [id]);
 
 
 

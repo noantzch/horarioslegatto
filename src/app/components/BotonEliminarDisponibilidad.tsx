@@ -1,3 +1,5 @@
+import { getId } from '@/ts/getId';
+import { useUser } from '@clerk/nextjs';
 import React, { useEffect, useState } from 'react'
 import { IoIosClose } from "react-icons/io";
 
@@ -35,24 +37,60 @@ const [showForm, setShowForm] = useState<boolean>(false);
     deleteData(id)
   }
 
+
+ //ID
+ const { user } = useUser();
+ const [loading, setLoading] = useState(true);
+ const [id, setId] = useState<number| null>(null);
+
+ useEffect(() => {
+   const fetchData = async () => {
+     try {
+       if (!user) {
+         return;
+       }
+
+       const userId: string | null = user.id || null;
+       const fetchedId = await getId(userId);
+       setId(fetchedId);
+     } catch (error) {
+       console.error((error as Error).message);
+     } finally {
+       setLoading(false);
+     }
+   };
+
+   fetchData();
+ }, [user]);
+
+
   const [disponibilidad, setDisponibilidad] = useState<DisponibilidadCalendario[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() =>{
+  useEffect(() => {
     const fetchData = async () => {
-        try{
-            const response = await fetch('http://localhost:3000/api/disponibilidad?id=1')
-            if(!response.ok){
-                throw new Error('No se pudo obtener');
-            }
-            const data = await response.json();
-            setDisponibilidad(data.disponibilidad)
-        }catch(error){
-            setError((error as Error))
+      try {
+        if (id === null || id === undefined) {
+          // Puedes decidir qué hacer si id es null o undefined
+          console.log('Cargando');
+          return;
         }
-    }
+  
+        const response = await fetch(`http://localhost:3000/api/disponibilidad?id=${id}`);
+        
+        if (!response.ok) {
+          throw new Error('No se pudo obtener');
+        }
+  
+        const data = await response.json();
+        setDisponibilidad(data.disponibilidad);
+      } catch (error) {
+        setError(error as Error);
+      }
+    };
+  
     fetchData();
-}, []);
+  }, [id]);
 
   return (
     <div>

@@ -1,6 +1,8 @@
 'use client'
 import { agregarCampoMes } from "@/ts/agregarMes";
 import { formatearFecha } from "@/ts/fecha";
+import { getId } from "@/ts/getId";
+import { useUser } from "@clerk/nextjs";
 import { useCallback, useEffect, useState } from "react"
 
 
@@ -8,10 +10,42 @@ const Clases = () => {
     const [clasesPasadas, setClasesPasadas] = useState<AsistenciaInstrumento[]>([])
     const [error, setError] = useState<Error | null>(null);
     const [clasesMes, setClasesMes] = useState<AsistenciaMes[]>([])
+
+  //ID
+  const { user } = useUser();
+  const [loading, setLoading] = useState(true);
+  const [id, setId] = useState<number| null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!user) {
+          return;
+        }
+
+        const userId: string | null = user.id || null;
+        const fetchedId = await getId(userId);
+        setId(fetchedId);
+      } catch (error) {
+        console.error((error as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [user]);
+
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:3000/api/clasespasadas?id=1")
+              if (id === null || id === undefined) {
+                // Puedes decidir qué hacer si id es null o undefined
+                console.log('Cargando');
+                return;
+              }
+                const response = await fetch(`http://localhost:3000/api/clasespasadas?id=${id}`)
                 if (!response.ok) {
                     throw new Error('No se pudo obtener')
                 }
@@ -22,7 +56,7 @@ const Clases = () => {
             }
         }
         fetchData();
-    }, []); // Cambiado a un array vacío
+    }, [id]); // Cambiado a un array vacío
     
     const agregarCampoMesCallback = useCallback(() => {
         return agregarCampoMes(clasesPasadas);

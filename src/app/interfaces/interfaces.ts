@@ -80,7 +80,7 @@ interface Disponibilidad {
   id_dia: number;
   hora_inicio: string;
   hora_cierre: string;
-  id_profesor: number;
+  id_profesor: number | null;
 }
 
 interface DisponibilidadCalendario {

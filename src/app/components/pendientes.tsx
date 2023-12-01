@@ -2,15 +2,47 @@
 import { formatearFecha } from '@/ts/fecha';
 import React, { useEffect, useState } from 'react';
 import PendientesButton from './pendientesButton';
+import { useUser } from '@clerk/nextjs';
+import { getId } from '@/ts/getId';
 
 const Pendientes = () =>{
   const [asistencias, setAsistencias] = useState<Asistencia[]>([]);
-    const [error, setError] = useState<Error | null>(null);
-  
+  const [error, setError] = useState<Error | null>(null);
+   //ID
+   const { user } = useUser();
+  const [loading, setLoading] = useState(true);
+  const [id, setId] = useState<number| null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!user) {
+          return;
+        }
+
+        const userId: string | null = user.id || null;
+        const fetchedId = await getId(userId);
+        setId(fetchedId);
+      } catch (error) {
+        console.error((error as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [user]);
+
+  //get asistencias
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await fetch('http://localhost:3000/api/asistencia?id=1'); 
+          if (id === null || id === undefined) {
+            // Puedes decidir qué hacer si id es null o undefined
+            console.log('Cargando');
+            return;
+          }
+          const response = await fetch(`http://localhost:3000/api/asistencia?id=${id}`); 
             if (!response.ok) {
               throw new Error('No se pudo obtener la información');
             }
@@ -21,7 +53,7 @@ const Pendientes = () =>{
       };
   
       fetchData();
-    }, []); 
+    }, [id]); 
   
     if (error) {
       return <p className='text-center p-6'>No tienes asistencias pendientes</p>;
