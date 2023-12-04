@@ -11,7 +11,7 @@ const PendientesButton: React.FC<PendientesButtonProps> = ({ asistencia }) => {
 
   const confirmarAsistencia = async (asistio: boolean) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/confirmarAsistencia?id=${asistencia.id}`, {
+      const response = await fetch(`https://horarioslegatto.vercel.app/api/confirmarAsistencia?id=${asistencia.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

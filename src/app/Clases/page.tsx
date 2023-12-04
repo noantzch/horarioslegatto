@@ -45,7 +45,7 @@ const Clases = () => {
                 console.log('Cargando');
                 return;
               }
-                const response = await fetch(`http://localhost:3000/api/clasespasadas?id=${id}`)
+                const response = await fetch(`https://horarioslegatto.vercel.app/api/clasespasadas?id=${id}`)
                 if (!response.ok) {
                     throw new Error('No se pudo obtener')
                 }

@@ -72,7 +72,7 @@ OJO CON EL DEPLOY QUE HAY QUE CAMBAIR EL FETCH
     en api, creo carpetas y route.ts recibo o envio la información necesaria
     con async function GET(request: Request) try{await sql`` } catch. Recibo tablas y return NextResponse.json({ RETURNA }, { status: 200 }); 
                 ->  const { searchParams } = new URL(request.url);
-    const id_profesor = searchParams.get('id');  http://localhost:3000/api/asistencia?id=123
+    const id_profesor = searchParams.get('id');  https://horarioslegatto.vercel.app/api/asistencia?id=123
     cree interfaces para respetar sus interiores 
 
 

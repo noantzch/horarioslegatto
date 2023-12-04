@@ -42,7 +42,7 @@ const Pendientes = () =>{
             console.log('Cargando');
             return;
           }
-          const response = await fetch(`http://localhost:3000/api/asistencia?id=${id}`); 
+          const response = await fetch(`https://horarioslegatto.vercel.app/api/asistencia?id=${id}`); 
             if (!response.ok) {
               throw new Error('No se pudo obtener la información');
             }
