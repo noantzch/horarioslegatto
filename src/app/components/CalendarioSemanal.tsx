@@ -139,34 +139,38 @@ const CalendarioSemanal = () => {
   return (
     <div>
         <h3 className="font-semibold text-lg p-4 text-center ">Calendario Semanal</h3>
-        {events.length > 0 || events2.length > 0? 
-        (<div >
-            <FullCalendar 
-            
-            hiddenDays={[0, 6]}
-            height="auto"
-            plugins={[timeGridPlugin]}
-            initialView="timeGridWeek"
-            events={[...events, ...events2]}
-            slotDuration="00:20:00" // Duración de cada intervalo de tiempo en la cuadrícula
-            allDaySlot={false} // No mostrar eventos de todo el día en esta vista
-            slotMinTime = {earliestEventTime}
-            slotMaxTime = {latestEventTime}
-            headerToolbar={false}
-            dayHeaderFormat={{ weekday: 'long' }}
-            locale={esLocale}
-            
-            eventContent={(eventInfo) => (
-                <>
-                    <p className="text-xs">{eventInfo.timeText}</p>
-                    <p className="text-xs">{eventInfo.event.title}</p>
-                    <p className="text-xs">{eventInfo.event.extendedProps.subtitle} </p> {/* Muestra el subtítulo */}
-                </>
-            )}
-            />
-        </div>)
-        :
-        (<Cargando />)}
+        { (id === null || id === undefined)  ? 
+          <Cargando /> 
+          : 
+          events.length > 0 || events2.length > 0? 
+            (<div >
+                <FullCalendar 
+                
+                hiddenDays={[0, 6]}
+                height="auto"
+                plugins={[timeGridPlugin]}
+                initialView="timeGridWeek"
+                events={[...events, ...events2]}
+                slotDuration="00:20:00" // Duración de cada intervalo de tiempo en la cuadrícula
+                allDaySlot={false} // No mostrar eventos de todo el día en esta vista
+                slotMinTime = {earliestEventTime}
+                slotMaxTime = {latestEventTime}
+                headerToolbar={false}
+                dayHeaderFormat={{ weekday: 'long' }}
+                locale={esLocale}
+                
+                eventContent={(eventInfo) => (
+                    <>
+                        <p className="text-xs">{eventInfo.timeText}</p>
+                        <p className="text-xs">{eventInfo.event.title}</p>
+                        <p className="text-xs">{eventInfo.event.extendedProps.subtitle} </p> {/* Muestra el subtítulo */}
+                    </>
+                )}
+                />
+            </div>)
+            :
+            (<p className="text-center">No tenes disponibilidad o clases agendadas</p>)
+          }
     </div>
   )
 }
