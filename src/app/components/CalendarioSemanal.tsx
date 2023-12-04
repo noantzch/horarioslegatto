@@ -54,7 +54,7 @@ const CalendarioSemanal = () => {
         const fetchData = async () => {
           try {
             if (id === null || id === undefined) {
-              return <Cargando />;
+              return;
             }
       
             const response = await fetch(`https://horarioslegatto.vercel.app/api/clases?id=${id}`);
@@ -77,7 +77,7 @@ const CalendarioSemanal = () => {
         const fetchData = async () => {
           try {
             if (id === null || id === undefined) {
-              return <Cargando />;
+              return;
             }
       
             const response = await fetch(`https://horarioslegatto.vercel.app/api/disponibilidad?id=${id}`);

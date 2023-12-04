@@ -39,7 +39,7 @@ const Pendientes = () =>{
       const fetchData = async () => {
         try {
           if (id === null || id === undefined) {
-            return <Cargando />;
+            return;
           }
           const response = await fetch(`https://horarioslegatto.vercel.app/api/asistencia?id=${id}`); 
             if (!response.ok) {
