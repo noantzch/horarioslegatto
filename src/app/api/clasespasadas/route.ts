@@ -14,19 +14,20 @@ export async function GET(request: Request) {
 
     // Consulta SQL con el ID proporcionado
     const asistenciasData = await sql`SELECT 
-                                        Asistencias.*, 
-                                        Alumnos.nombre, 
-                                        Alumnos.apellido,
-                                        Instrumentos.instrumento
-                                    FROM 
-                                        Asistencias
-                                    JOIN 
-                                        Alumnos ON Asistencias.id_alumno = Alumnos.id
-                                    JOIN 
-                                        Instrumentos ON Asistencias.id_instrumento = Instrumentos.id
-                                    WHERE 
-                                        Asistencias.id_profesor = ${id_profesor}
-                                        AND Asistencias.pendiente = false;`;
+                              Asistencias.*, 
+                              Alumnos.nombre, 
+                              Alumnos.apellido,
+                              Instrumentos.instrumento
+                          FROM 
+                              Asistencias
+                          JOIN 
+                              Alumnos ON Asistencias.id_alumno = Alumnos.id
+                          JOIN 
+                              Instrumentos ON Asistencias.id_instrumento = Instrumentos.id
+                          WHERE 
+                              Asistencias.id_profesor = ${id_profesor}
+                              AND Asistencias.pendiente = false
+                              AND Asistencias.asistio = true;`;
     const clases = asistenciasData.rows;
 
     // Verificar si se encontraron resultados
