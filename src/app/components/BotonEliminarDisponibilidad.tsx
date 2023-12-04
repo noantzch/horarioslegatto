@@ -71,8 +71,7 @@ const [showForm, setShowForm] = useState<boolean>(false);
     const fetchData = async () => {
       try {
         if (id === null || id === undefined) {
-          // Puedes decidir qué hacer si id es null o undefined
-          console.log('Cargando');
+
           return;
         }
   

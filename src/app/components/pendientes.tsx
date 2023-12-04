@@ -59,7 +59,7 @@ const Pendientes = () =>{
     }
     return(
         <div>
-          { (id === null || id === undefined) || (asistencias === null || asistencias === undefined || asistencias.length < 0) ? 
+          { (id === null || id === undefined) || (asistencias === null || asistencias === undefined) ? 
           <Cargando /> 
           : 
             <div className='w-full flex flex-col mb-6 p-5'>
