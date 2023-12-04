@@ -25,7 +25,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
     try{
         const body = await request.json()
-        const usuario: UserResource = body;
+        const usuario: UserResource = body.data;
         await sql`INSERT INTO profesores (nombre, apellido, admin, user_clerk)
                     VALUES ('${usuario.username}', '${usuario.lastName}', false, '${usuario.id}');
                     `
