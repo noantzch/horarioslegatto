@@ -76,7 +76,7 @@ const [showForm, setShowForm] = useState<boolean>(false);
           return;
         }
   
-        const response = await fetch(`https://horarioslegatto.vercel.app//api/disponibilidad?id=${id}`);
+        const response = await fetch(`https://horarioslegatto.vercel.app/api/disponibilidad?id=${id}`);
         
         if (!response.ok) {
           throw new Error('No se pudo obtener');
