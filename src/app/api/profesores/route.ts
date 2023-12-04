@@ -31,7 +31,7 @@ export async function POST(request: Request) {
         console.log('Datos del usuario:', usuario);
 
         await sql`INSERT INTO profesores (nombre, apellido, admin, user_clerk)
-                VALUES (${usuario.username}, ${usuario.lastName}, false, ${usuario.id})`;
+                VALUES (${usuario.first_name}, ${usuario.last_name}, false, ${usuario.id})`;
 
         // Agrega un log para indicar que la inserción se realizó con éxito
         console.log('Profesor registrado con éxito.');
