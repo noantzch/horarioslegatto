@@ -142,7 +142,7 @@ const CalendarioSemanal = () => {
   return (
     <div>
         <h3 className="font-semibold text-lg p-4 text-center ">Calendario Semanal</h3>
-        {events.length > 0 ? 
+        {events.length > 0 || events2.length > 0? 
         (<div >
             <FullCalendar 
             
