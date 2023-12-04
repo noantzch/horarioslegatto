@@ -4,6 +4,7 @@ import { formatearFecha } from "@/ts/fecha";
 import { getId } from "@/ts/getId";
 import { useUser } from "@clerk/nextjs";
 import { useCallback, useEffect, useState } from "react"
+import Cargando from "../components/Cargando";
 
 
 const Clases = () => {
@@ -41,9 +42,7 @@ const Clases = () => {
         const fetchData = async () => {
             try {
               if (id === null || id === undefined) {
-                // Puedes decidir qué hacer si id es null o undefined
-                console.log('Cargando');
-                return;
+                return <Cargando />;
               }
                 const response = await fetch(`https://horarioslegatto.vercel.app/api/clasespasadas?id=${id}`)
                 if (!response.ok) {
@@ -96,30 +95,36 @@ const Clases = () => {
       });
   return (
     <div>
-        {Object.keys(meses).map((mes) => (
-      <div key={mes} className="mb-8">
-        <h2 className="text-2xl font-bold mb-4 p-1 m-2 text-center">{obtenerNombreMes(parseInt(mes, 10))}</h2>
-        <table className="min-w-full border border-gray-300">
-          <thead>
-            <tr>
-              <th className="border bg-gray-200 p-2">Alumno</th>
-              <th className="border bg-gray-200 p-2">Fecha</th>
-              <th className="border bg-gray-200 p-2">Instrumento</th>
-            </tr>
-          </thead>
-          <tbody>
-            {meses[parseInt(mes, 10)].map((element) => (
-              <tr key={element.id}>
-                <td className="border p-2">{`${element.nombre} ${element.apellido}`}</td>
-                <td className="border p-2">{formatearFecha(element.fecha)}</td>
-                <td className="border p-2">{element.instrumento}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    ))
-  }
+       { (id === null || id === undefined) || (clasesPasadas === null || clasesPasadas === undefined || clasesPasadas.length < 0) ? 
+          <Cargando /> 
+          : 
+          
+            Object.keys(meses).map((mes) => (
+            <div key={mes} className="mb-8">
+              <h2 className="text-2xl font-bold mb-4 p-1 m-2 text-center">{obtenerNombreMes(parseInt(mes, 10))}</h2>
+              <table className="min-w-full border border-gray-300">
+                <thead>
+                  <tr>
+                    <th className="border bg-gray-200 p-2">Alumno</th>
+                    <th className="border bg-gray-200 p-2">Fecha</th>
+                    <th className="border bg-gray-200 p-2">Instrumento</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {meses[parseInt(mes, 10)].map((element) => (
+                    <tr key={element.id}>
+                      <td className="border p-2">{`${element.nombre} ${element.apellido}`}</td>
+                      <td className="border p-2">{formatearFecha(element.fecha)}</td>
+                      <td className="border p-2">{element.instrumento}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+              ))
+            
+
+          }
     </div>
   )
 }

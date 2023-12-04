@@ -10,6 +10,7 @@ import { getLatestEndTime } from "@/ts/startAndEndTime";
 import { transformEventsforDisponibilidad } from "@/ts/transformEvents";
 import { useUser } from "@clerk/nextjs";
 import { getId } from "@/ts/getId";
+import Cargando from "./Cargando";
 
 const CalendarioSemanal = () => {
     const [clases, setClases] = useState<Clase[]>([]);
@@ -53,9 +54,7 @@ const CalendarioSemanal = () => {
         const fetchData = async () => {
           try {
             if (id === null || id === undefined) {
-              // Puedes decidir qué hacer si id es null o undefined
-              console.log('Cargando');
-              return;
+              return <Cargando />;
             }
       
             const response = await fetch(`https://horarioslegatto.vercel.app/api/clases?id=${id}`);
@@ -78,9 +77,7 @@ const CalendarioSemanal = () => {
         const fetchData = async () => {
           try {
             if (id === null || id === undefined) {
-              // Puedes decidir qué hacer si id es null o undefined
-              console.log('Cargando');
-              return;
+              return <Cargando />;
             }
       
             const response = await fetch(`https://horarioslegatto.vercel.app/api/disponibilidad?id=${id}`);
@@ -137,7 +134,7 @@ const CalendarioSemanal = () => {
      
     
     if(error){
-        return <p>No se asignaron clases todavía</p>
+        return <p className="text-center">No se asignaron clases todavía</p>
     }
   return (
     <div>
@@ -169,7 +166,7 @@ const CalendarioSemanal = () => {
             />
         </div>)
         :
-        (<p>Cargando..</p>)}
+        (<Cargando />)}
     </div>
   )
 }

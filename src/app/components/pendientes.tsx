@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import PendientesButton from './pendientesButton';
 import { useUser } from '@clerk/nextjs';
 import { getId } from '@/ts/getId';
+import Cargando from './Cargando';
 
 const Pendientes = () =>{
   const [asistencias, setAsistencias] = useState<Asistencia[]>([]);
@@ -38,9 +39,7 @@ const Pendientes = () =>{
       const fetchData = async () => {
         try {
           if (id === null || id === undefined) {
-            // Puedes decidir qué hacer si id es null o undefined
-            console.log('Cargando');
-            return;
+            return <Cargando />;
           }
           const response = await fetch(`https://horarioslegatto.vercel.app/api/asistencia?id=${id}`); 
             if (!response.ok) {
@@ -56,10 +55,13 @@ const Pendientes = () =>{
     }, [id]); 
   
     if (error) {
-      return <p className='text-center p-6'>No tienes asistencias pendientes</p>;
+      return <p className='text-center p-6'>Hubo un error en el sistema, consulte más tarde</p>;
     }
     return(
         <div>
+          { (id === null || id === undefined) || (asistencias === null || asistencias === undefined || asistencias.length < 0) ? 
+          <Cargando /> 
+          : 
             <div className='w-full flex flex-col mb-6 p-5'>
               <h2 className='font-semibold text-lg p-4 text-center'>Pendientes de Asistencia</h2>
               <table className="w-auto">
@@ -90,9 +92,7 @@ const Pendientes = () =>{
 
 
             </div>
-            <div>
-
-  </div>
+          }
         </div>
     )
 }

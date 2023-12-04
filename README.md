@@ -29,7 +29,7 @@
     ->Agregar Disponibilidad
 
 
-## ¿SIGN-UP + AGREGAR PROFESOR?
+## FALTA CARGANDO Y ADMINISTRADORES
         ->Consultar si es admin
         ->Desarrollar asignar clase
 
