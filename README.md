@@ -4,6 +4,7 @@
     -Instalar clerck y crear signin siginup archivos env 
         -incluir boton de clerck como boton de perfil
     obtengo el id de clerk con useClient y con getId y la api consulta obtengo el id de la DB
+    -en webhooks user.created para aplicar logidca del back que aregar ala DB la información
 ## NAVBAR
     -tailwind usestate y basics https://www.youtube.com/watch?v=8s4DK5PkRNQ&ab_channel=BrettWestwood-SoftwareEngineer 
     -title
@@ -29,13 +30,13 @@
     ->Agregar Disponibilidad
 
 
-## FALTA CARGANDO Y ADMINISTRADORES
+## ADMINISTRADORES
         ->Consultar si es admin
         ->Desarrollar asignar clase
 
 .Asignar Clase:
-    -Seleccionar Profe
-    -
+    -Calendario de todos los profes?
+    -Elegir profesor
 
 
 

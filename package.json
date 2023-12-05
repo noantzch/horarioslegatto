@@ -18,6 +18,7 @@
     "@fullcalendar/react": "^6.1.9",
     "@fullcalendar/timegrid": "^6.1.9",
     "@vercel/postgres": "^0.5.1",
+    "cors": "^2.8.5",
     "moment": "^2.29.4",
     "next": "14.0.1",
     "react": "^18",

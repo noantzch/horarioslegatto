@@ -93,3 +93,10 @@ interface DisponibilidadCalendario {
   nombre_profesor: string
 }
 
+interface Profesores {
+  id: number;
+  nombre: string;
+  apellido: string;
+  admin: boolean;
+  user_clerk: string;
+}
