@@ -31,12 +31,12 @@
 
 
 ## ADMINISTRADORES
-        ->Consultar si es admin
+        ->Consultar si es admin en asignar
         ->Desarrollar asignar clase
 
 .Asignar Clase:
-    -Calendario de todos los profes?
-    -Elegir profesor
+    -Calendario de todos los profes por DÍA
+        -hacer click en disponibilidad para asignar clase
 
 
 
