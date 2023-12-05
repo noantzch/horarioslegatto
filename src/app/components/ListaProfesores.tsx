@@ -10,7 +10,7 @@ const ListaProfesores = () => {
     useEffect(() =>{
         const fetchData =async () => {
             try{
-                const resposne = await fetch(`http://localhost:3000/api/profesores`)
+                const resposne = await fetch(`https://horarioslegatto.vercel.app/api/profesores`)
                 if(!resposne.ok){
                     throw new Error('No se pudo econtrar los profesrores')
                 }

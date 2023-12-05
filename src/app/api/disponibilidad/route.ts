@@ -1,32 +1,38 @@
 import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
-
 export async function GET(request: Request) {
   try {
     // Obtener el ID de los parámetros de consulta
     const { searchParams } = new URL(request.url);
     const id_profesor = searchParams.get('id');
 
-    // Verificar si se proporcionó un ID
-    if (!id_profesor) {
-      return NextResponse.json({ error: 'Debes proporcionar un ID de profesor' }, { status: 400 });
+    // Consulta SQL condicional
+    let disponibilidadData;
+    if (id_profesor) {
+      // Consulta para un profesor específico
+      disponibilidadData = await sql`SELECT Disponibilidad.*,
+                                      Profesores.nombre AS nombre_profesor,
+                                      Dias.dia
+                                      FROM Disponibilidad
+                                      JOIN Profesores ON Disponibilidad.id_profesor = Profesores.id
+                                      JOIN Dias ON Disponibilidad.id_dia = Dias.id
+                                      WHERE Disponibilidad.id_profesor = ${id_profesor}`;
+    } else {
+      // Consulta para todas las filas sin excepción
+      disponibilidadData = await sql`SELECT Disponibilidad.*,
+                                      Profesores.nombre AS nombre_profesor,
+                                      Dias.dia
+                                      FROM Disponibilidad
+                                      JOIN Profesores ON Disponibilidad.id_profesor = Profesores.id
+                                      JOIN Dias ON Disponibilidad.id_dia = Dias.id`;
     }
 
-    // Consulta SQL con el ID proporcionado
-    const disponibilidadData = await sql`SELECT Disponibilidad.*,
-                                        Profesores.nombre AS nombre_profesor,
-                                        Dias.dia
-                                        FROM Disponibilidad
-                                        JOIN Profesores ON Disponibilidad.id_profesor = Profesores.id
-                                        JOIN Dias ON Disponibilidad.id_dia = Dias.id
-                                        WHERE Disponibilidad.id_profesor = ${id_profesor}`;
     const disponibilidad = disponibilidadData.rows;
 
     // Verificar si se encontraron resultados
     if (disponibilidad.length === 0) {
       return NextResponse.json({ resultado: 'No se encontró disponibilidad del profesor' }, { status: 200 });
     }
-
 
     return NextResponse.json({ disponibilidad }, { status: 200 });
   } catch (error) {
