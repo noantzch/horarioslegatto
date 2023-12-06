@@ -38,8 +38,11 @@
     .Asignar Clase:
 c       calendario con todas las disponibilidades con botón por día (5 calendarios)
         hacer click en la disponibilidad para plicar
-        ABRE FORMULARIO QUEDA PENDIENTE USAR EL ID QUE SE OBTUVO DE ESA FUNCION PARA USARLO 
-
+        ABRE FORMULARIO 
+            se determina horas limites con el objeto obtenido del evento seleccionado
+            se ingresa datos de alumno (UN ALUMNO PRO HORARIO, HABRAN ALUMNOS REPETIDOS)
+                MUCHA LOCIGA PARA GESTIONAR ESE FORMULARIO Y SWAL PARA CONFIRMAR
+                SEGUIR CON EL BACK
 
 
 

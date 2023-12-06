@@ -6,6 +6,9 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import esLocale from '@fullcalendar/core/locales/es';
 import { addDays, getDay, format } from 'date-fns';
 import { IoIosClose } from "react-icons/io";
+import { convertirMilisegundosAHoras } from "@/ts/convertirMilisegundos";
+import { obtenerDiaSemana } from "@/ts/getDayOfTheWeekts";
+import Swal from "sweetalert2";
 
 const CalendarioProfesor = () => {
     const [showDay, setShowDay] = useState<boolean[]>([false, false, false, false, false])
@@ -30,61 +33,219 @@ const CalendarioProfesor = () => {
                 setError(error as Error);
             }
             };
-      
+
         fetchData();
-      }, []);
-      useEffect(() => {
+        }, []);
+        useEffect(() => {
         if(disponibilidades && disponibilidades.length > 0){
             const transformedEvents = transformEventsforDisponibilidad2(disponibilidades);
             setEvents(transformedEvents);
         }
-      }, [disponibilidades]);
+        }, [disponibilidades]);
 
-      const handleClick = (numero: number) =>{
+        const handleClick = (numero: number) =>{
         setShowDay((prevShowDay) => {
             return prevShowDay.map((value, index) => (index === numero ? !value : value));
-          });
+        });
         };
         const getNextWeekdayDate = (props: number): string => {
             const dayOfWeek = props
-          
+
             // Obtener la fecha actual
             const currentDate = new Date();
-          
+
             // Calcular la diferencia de días para llegar al próximo día de la semana solicitado
             let daysToAdd = dayOfWeek - getDay(currentDate);
             if (daysToAdd <= 0) {
               // Si el día solicitado es igual o anterior al día actual, sumar 7 días
-              daysToAdd += 7;
+            daysToAdd += 7;
             }
-          
+
             // Calcular la fecha del próximo día de la semana
             const nextWeekdayDate = addDays(currentDate, daysToAdd);
-          
+
             // Formatear la fecha como string (puedes ajustar el formato según tus necesidades)
             const formattedDate = format(nextWeekdayDate, 'yyyy-MM-dd');
-          
-            return formattedDate;
-          };
-        const handleEventClick = (info: any) =>{
-            setClickEvent(true)
-            setEventForm(info.event._def.extendedProps.id)
-            console.log("Disponibilidad: ", info.event._def)
-            //pendiente seguir con este id!!!
-        }
-      const handleCloseForm = () =>{
-        setClickEvent(false)
-      }
-      const [eventForm, setEventForm] = useState<any>()
 
-  return (
+            return formattedDate;
+            };
+            const handleEventClick = (info: any) => {
+                setClickEvent(true);
+                const eventInfo = info.event._def;
+                // Asegurarse de que eventId es un valor válido antes de establecerlo
+                    if (eventInfo) {
+                        setEventForm(eventInfo);
+                    }
+                };
+            
+            const handleCloseForm = () => {
+                setClickEvent(false);
+            };
+            
+            const [eventForm, setEventForm] = useState<any>();
+        
+            //form horario
+            const [hora, setHora] = useState<any>({
+                                            hora_cierre: "",
+                                            hora_inicio: "",
+                                            hora_min: "",
+                                            hora_max: "",
+                                            id_instrumento: 0,
+                                            nombre: "",
+                                            apellido: ""
+                                            })
+            const handleChange = (horaInicio: string, horaCierre: string, horaMin: string, horaMax: string, instrumentoSeleccionado:number, nombre: string, apellido: string) => {
+                const index = instrumentoSeleccionado - 1;
+
+                    setHora({
+                    hora_cierre: horaCierre,
+                    hora_inicio: horaInicio,
+                    hora_min: horaMin,
+                    hora_max: horaMax,
+                    id_instrumento: instrumentoSeleccionado,
+                    nombre: nombre,
+                    apellido: apellido
+                    });  
+                };
+                const opciones = [
+                    { id: 1, instrumento: 'Piano' },
+                    { id: 2, instrumento: 'Violín' },
+                    { id: 3, instrumento: 'Batería' },
+                    { id: 4, instrumento: 'Guitarra' },
+                    { id: 5, instrumento: 'Canto' },
+                    { id: 6, instrumento: 'Teoría' },
+                    { id: 7, instrumento: 'Bajo' },
+                    { id: 8, instrumento: 'Ukelele' },
+                    { id: 9, instrumento: 'Iniciación' },
+                    { id: 10, instrumento: 'Cello' }
+                ];
+                const [instrumentoSeleccionado, setInstrumentoSeleccionado] = useState<number>(0);
+
+                const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) =>{
+                    e.preventDefault()
+                    const horaInicioDate = new Date(`2000-01-01T${hora.hora_Inicio}`);
+                    const horaCierreDate = new Date(`2000-01-01T${hora.hora_cierre}`);
+                    const horaMinDate = new Date(`2000-01-01T${hora.hora_min}`);
+                    const horaMaxDate = new Date(`2000-01-01T${hora.hora_max}`);
+                    if (horaInicioDate < horaMinDate || horaCierreDate > horaMaxDate) {
+                        alert('No se respeto la disponibilidad horaria, revisa las horas');
+                    }else(
+                        
+                        Swal.fire({
+                            title: 
+                                `Confirmación de Clase: ${opciones[(hora.id_instrumento -1)].instrumento} 
+                                        con el/la ${eventForm.extendedProps.subtitle}, 
+                                        día ${obtenerDiaSemana(eventForm.recurringDef.typeData.daysOfWeek[0])}
+                                        de ${hora.hora_inicio} a ${hora.hora_cierre}-
+                                        Alumno/Grupo: ${hora.nombre} ${hora.apellido}`,
+                            showDenyButton: true,
+                            confirmButtonText: "Confirmar",
+                            cancelButtonText:"Cancelar"
+                            }).then((result) => {
+                                /* Read more about isConfirmed, isDenied below */
+                                if (result.isConfirmed) {
+                                    //LOGICA AGREGAR
+                                Swal.fire("Clase asignada")
+                                window.location.reload()
+                                } 
+                            })
+                    )
+                }
+    return (
     <div>
         {clickEvent?
         (
             <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
                 <div className="bg-white p-4 relative"  style={{ zIndex: 1000 }}>
                     <button onClick={handleCloseForm} className="absolute top-0 right-0 p-1"><IoIosClose /></button>
-                    <h4 className="space-y-4">Formulario de horario #</h4>
+                    {eventForm ?
+                    (<div>
+                        <p>Clase con el/la {eventForm.extendedProps.subtitle}</p>
+                        <p>Seleccionar horario dentro de la disponibilidad ({convertirMilisegundosAHoras(eventForm.recurringDef.typeData.startTime.milliseconds)} a {convertirMilisegundosAHoras(eventForm.recurringDef.typeData.endTime.milliseconds)}, {obtenerDiaSemana(eventForm.recurringDef.typeData.daysOfWeek[0])}):</p>
+                            <form onSubmit={handleSubmit}>
+                                <div>
+                                    <label htmlFor="horaInicio">De:</label>
+                                            <input
+                                            type="time"
+                                            id="horaInicio"
+                                            onChange={(e) => handleChange(
+                                                e.target.value, 
+                                                (document.getElementById("horaCierre") as HTMLInputElement).value || "00:00", 
+                                                convertirMilisegundosAHoras(eventForm.recurringDef.typeData.startTime.milliseconds), 
+                                                convertirMilisegundosAHoras(eventForm.recurringDef.typeData.endTime.milliseconds), 
+                                                parseInt((document.getElementById("instrumentoSeleccionado") as HTMLInputElement).value), 
+                                                (document.getElementById("nombre") as HTMLInputElement).value, 
+                                                (document.getElementById("apellido") as HTMLInputElement).value
+                                                )}
+                                            className="border p-2"
+                                            />
+
+                                    <label htmlFor="horaCierre">A:</label>
+                                            <input
+                                                type="time"
+                                                id="horaCierre"
+                                                onChange={(e) => handleChange(
+                                                    (document.getElementById("horaInicio") as HTMLInputElement).value || "02:00", 
+                                                    e.target.value, convertirMilisegundosAHoras(eventForm.recurringDef.typeData.startTime.milliseconds), 
+                                                    convertirMilisegundosAHoras(eventForm.recurringDef.typeData.endTime.milliseconds), 
+                                                    parseInt((document.getElementById("instrumentoSeleccionado") as HTMLInputElement).value),
+                                                    (document.getElementById("nombre") as HTMLInputElement).value, 
+                                                    (document.getElementById("apellido") as HTMLInputElement).value)}
+                                                className="border p-2"
+                                            />
+                                </div>
+                                <div>
+                                    <label htmlFor="instrumento">Instrumento:</label>
+                                        <select 
+                                            onChange={(e) => handleChange(
+                                                (document.getElementById("horaInicio") as HTMLInputElement).value || "02:00", 
+                                                (document.getElementById("horaCierre") as HTMLInputElement).value || "00:00",
+                                                convertirMilisegundosAHoras(eventForm.recurringDef.typeData.startTime.milliseconds),
+                                                convertirMilisegundosAHoras(eventForm.recurringDef.typeData.endTime.milliseconds), 
+                                                parseInt(e.target.value),
+                                                (document.getElementById("nombre") as HTMLInputElement).value, 
+                                                (document.getElementById("apellido") as HTMLInputElement).value
+                                                )}
+                                            value={hora.id_instrumento || 0} id="instrumentoSeleccionado">
+                                                    {opciones.map(opcion => (
+                                                        <option key={opcion.id} value={opcion.id}>{opcion.instrumento}</option>
+                                                    ))}
+                                        </select>
+                                </div>
+                                <div>
+                                    <label htmlFor="alumno">Nombre Alumno: </label>
+                                    <input type="text" id="nombre" 
+                                        onChange={(e) => handleChange(
+                                            (document.getElementById("horaInicio") as HTMLInputElement).value || "02:00", 
+                                            (document.getElementById("horaCierre") as HTMLInputElement).value || "00:00",
+                                            convertirMilisegundosAHoras(eventForm.recurringDef.typeData.startTime.milliseconds),
+                                            convertirMilisegundosAHoras(eventForm.recurringDef.typeData.endTime.milliseconds), 
+                                            parseInt((document.getElementById("instrumentoSeleccionado") as HTMLInputElement).value),
+                                            e.target.value,
+                                            (document.getElementById("apellido") as HTMLInputElement).value
+                                        )}
+                                        />
+                                        
+                                    </div>
+                                    <div>
+                                    <label htmlFor="alumno">Apellido Alumno: </label>
+                                        <input type="text" id="apellido" 
+                                        onChange={(e) => handleChange(
+                                            (document.getElementById("horaInicio") as HTMLInputElement).value || "02:00", 
+                                            (document.getElementById("horaCierre") as HTMLInputElement).value || "00:00",
+                                            convertirMilisegundosAHoras(eventForm.recurringDef.typeData.startTime.milliseconds),
+                                            convertirMilisegundosAHoras(eventForm.recurringDef.typeData.endTime.milliseconds), 
+                                            parseInt((document.getElementById("instrumentoSeleccionado") as HTMLInputElement).value),
+                                            (document.getElementById("nombre") as HTMLInputElement).value,
+                                            e.target.value
+                                        )}
+                                        />
+                                </div>
+                                <button className="bg-green-400 p-2">Asignar Clase</button>
+                            </form>
+                    </div>)
+                    :
+                    (<p>Cargando...</p>)}
                 </div>
             </div>
             )
