@@ -75,6 +75,16 @@ interface OutputEvent {
         subtitle: string;
     };
 }
+interface OutputEvent2 {
+  title: string;
+  daysOfWeek: number[];
+  startTime: string;
+  endTime: string;
+  extendedProps: {
+      subtitle: string;
+      id: number
+  };
+}
 
 interface Disponibilidad {
   id_dia: number;

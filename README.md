@@ -28,15 +28,17 @@
     -eliminar disponibilidad boton delete AGREGAR UN CARGANDO
 
     ->Agregar Disponibilidad
+## clases pasadas
+    solo un get y funcion para organizar pro mes
 
-
-## ADMINISTRADORES
+## ASIGNAR CLASE
         ->Consultar si es admin en asignar
         ->Desarrollar asignar clase
 
-.Asignar Clase:
-    -Calendario de todos los profes por DÍA
-        -hacer click en disponibilidad para asignar clase
+    .Asignar Clase:
+c       calendario con todas las disponibilidades con botón por día (5 calendarios)
+        hacer click en la disponibilidad para plicar
+        ABRE FORMULARIO QUEDA PENDIENTE USAR EL ID QUE SE OBTUVO DE ESA FUNCION PARA USARLO 
 
 
 
