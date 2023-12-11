@@ -82,7 +82,8 @@ interface OutputEvent2 {
   endTime: string;
   extendedProps: {
       subtitle: string;
-      id: number
+      id: number;
+      id_profesor: number
   };
 }
 
@@ -109,4 +110,28 @@ interface Profesores {
   apellido: string;
   admin: boolean;
   user_clerk: string;
+}
+interface Alumno{
+  nombre: string;
+  apellido: string;
+  id_instrumento: number
+}
+
+interface Clase2{
+  id_profesor: number;
+  id_alumno: number;
+  hora_inicio: string;
+  hora_cierre: string;
+  id_disponibilidad: number;
+  id_dia: number;
+  id_instrumento: number
+}
+interface Asistencia{
+  id_alumno: number;
+  id_profesor: number;
+  asistio: boolean;
+  fecha: string;
+  pendiente: boolean;
+  id_instrumento: number
+
 }

@@ -36,3 +36,18 @@ export async function GET(request: Request) {
         return NextResponse.json({ error }, { status: 500 });
       }
 }
+
+export async function POST(request: Request) {
+    try {
+        const body = await request.json();
+        const clase: Clase2 = body;
+    
+        // Realizar la inserción en la base de datos
+        await sql`INSERT INTO clases (id_profesor, id_alumno, hora_inicio, hora_cierre, id_disponibilidad, id_dia, id_instrumento)
+                    VALUES (${clase.id_profesor}, ${clase.id_alumno}, ${clase.hora_inicio}, ${clase.hora_cierre}, ${clase.id_disponibilidad}, ${clase.id_dia}, ${clase.id_instrumento})`;
+    
+        return NextResponse.json({ mensaje: 'Clase creada exitosamente' }, { status: 201 });
+        } catch (error) {
+        return NextResponse.json({ error }, { status: 500 });
+    }
+  }

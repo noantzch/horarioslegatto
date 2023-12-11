@@ -32,3 +32,17 @@ export async function GET(request: Request) {
     return NextResponse.json({ error }, { status: 500 });
   }
 }
+export async function POST(request: Request) {
+  try {
+      const body = await request.json();
+      const asistencia: Asistencia = body;
+  
+      // Realizar la inserción en la base de datos
+      await sql`INSERT INTO asistencias (id_profesor, id_alumno, fecha, asistio, pendiente, id_instrumento)
+                  VALUES (${asistencia.id_profesor}, ${asistencia.id_alumno}, ${asistencia.fecha}, ${asistencia.asistio}, ${asistencia.pendiente}, ${asistencia.id_instrumento})`;
+  
+      return NextResponse.json({ mensaje: 'Asistencia creada exitosamente' }, { status: 201 });
+      } catch (error) {
+      return NextResponse.json({ error }, { status: 500 });
+  }
+}

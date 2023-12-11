@@ -9,8 +9,11 @@ import { IoIosClose } from "react-icons/io";
 import { convertirMilisegundosAHoras } from "@/ts/convertirMilisegundos";
 import { obtenerDiaSemana } from "@/ts/getDayOfTheWeekts";
 import Swal from "sweetalert2";
+import { calcularHorasRestantes } from "@/ts/obtenerRestoDisponibilidad";
+import { obtenerTodasLasFechas } from "@/ts/obtenerDiasAsistencias";
 
 const CalendarioProfesor = () => {
+    
     const [showDay, setShowDay] = useState<boolean[]>([false, false, false, false, false])
     const [disponibilidades, setDisponibilidades] = useState<DisponibilidadCalendario[]>()
     const [error, setError] = useState<Error | null>(null);
@@ -121,36 +124,243 @@ const CalendarioProfesor = () => {
                 ];
                 const [instrumentoSeleccionado, setInstrumentoSeleccionado] = useState<number>(0);
 
-                const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) =>{
-                    e.preventDefault()
+                const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+                    e.preventDefault();
                     const horaInicioDate = new Date(`2000-01-01T${hora.hora_Inicio}`);
                     const horaCierreDate = new Date(`2000-01-01T${hora.hora_cierre}`);
                     const horaMinDate = new Date(`2000-01-01T${hora.hora_min}`);
                     const horaMaxDate = new Date(`2000-01-01T${hora.hora_max}`);
+                
                     if (horaInicioDate < horaMinDate || horaCierreDate > horaMaxDate) {
                         alert('No se respeto la disponibilidad horaria, revisa las horas');
-                    }else(
-                        
+                    } else {
                         Swal.fire({
-                            title: 
-                                `Confirmación de Clase: ${opciones[(hora.id_instrumento -1)].instrumento} 
-                                        con el/la ${eventForm.extendedProps.subtitle}, 
-                                        día ${obtenerDiaSemana(eventForm.recurringDef.typeData.daysOfWeek[0])}
-                                        de ${hora.hora_inicio} a ${hora.hora_cierre}-
-                                        Alumno/Grupo: ${hora.nombre} ${hora.apellido}`,
+                            title: `Confirmación de Clase: ${opciones[(hora.id_instrumento - 1)].instrumento} 
+                                                      con el/la ${eventForm.extendedProps.subtitle}, 
+                                                      día ${obtenerDiaSemana(eventForm.recurringDef.typeData.daysOfWeek[0])}
+                                                      de ${hora.hora_inicio} a ${hora.hora_cierre}-
+                                                      Alumno/Grupo: ${hora.nombre} ${hora.apellido}`,
                             showDenyButton: true,
                             confirmButtonText: "Confirmar",
-                            cancelButtonText:"Cancelar"
-                            }).then((result) => {
-                                /* Read more about isConfirmed, isDenied below */
-                                if (result.isConfirmed) {
-                                    //LOGICA AGREGAR
-                                Swal.fire("Clase asignada")
-                                window.location.reload()
-                                } 
-                            })
-                    )
-                }
+                            cancelButtonText: "Cancelar"
+                          }).then(async (result) => {
+                            if (result.isConfirmed) {
+                              
+                              await postAlumno(); //post alumno incluye post clase
+                      
+                              // Este bloque se ejecutará después de que se haya actualizado idAlumno
+                              await actualizarDisponibilidad();
+                              
+                              Swal.fire("Clase asignada");
+                      
+                              // Considera otras opciones en lugar de recargar la página
+                              window.location.reload();
+                            }
+                          });
+                    
+                    }
+                };
+     
+                
+                //::::::::::::::LOGICA PARA AGREGAR AL CALENDARIO 
+                    //#1 CREAR AL ALUMNO + POSTCLASE Y CREARASISTENCIA
+                    const postAlumno = async () => {
+                        try {
+                            const response = await fetch("http://localhost:3000/api/alumno", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify(hora),
+                            });
+                    
+                            if (response.ok) {
+                                const data = await response.json(); // Convertir la respuesta a JSON
+                                
+                                await postClase(data.id)
+                                await crearAsistencias(data.id)
+                                return data.id
+                            } else {
+                                console.error("Error al crear el alumno");
+                            }
+                        } catch (error) {
+                            console.error("Error en la solicitud POST:", error);
+                        }
+                    };
+                    //#2 CREAR LA CLASE
+                    const postClase = async (idA:any) => {
+                        try {
+                           
+                            const claseBody: Clase2 = {
+                                id_profesor: eventForm.extendedProps.id_profesor,
+                                id_alumno: idA,
+                                hora_inicio: hora.hora_inicio,
+                                hora_cierre: hora.hora_cierre,
+                                id_disponibilidad: eventForm.extendedProps.id,
+                                id_dia: eventForm.recurringDef.typeData.daysOfWeek[0],
+                                id_instrumento: hora.id_instrumento
+                            };
+                            
+                            const response = await fetch("http://localhost:3000/api/clases", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify(claseBody),
+                            });
+                    
+                            if (response.ok) {
+                                const data = await response.json(); // Convertir la respuesta a JSON
+                                console.log("Clase creada exitosamente");
+                            } else {
+                                console.error("Error al crear la clase");
+                            }
+                        } catch (error) {
+                            console.error("Error en la solicitud POST:", error);
+                        }
+                    };
+                    //#ACTTUALIZAR DISPONIBLIDAD
+                    const actualizarDisponibilidad = () =>{
+                        const horaResultante =  calcularHorasRestantes(hora)
+                        if (horaResultante !== null && typeof horaResultante === 'object') {
+                            // Obtener un array de claves
+                            const keysArray = Object.keys(horaResultante);
+                          
+                            // Obtener la cantidad de claves
+                            const cantidadDeKeys = keysArray.length;
+                           if(cantidadDeKeys > 0){
+                                console.log(horaResultante)
+                                //edito la disponibilidad
+                                const primeraClave = Object.keys(horaResultante)[0]
+                                const valorCorrespondiente = horaResultante[primeraClave]
+                                editarDisponibilidad(valorCorrespondiente[0], valorCorrespondiente[1], eventForm.extendedProps.id)
+            
+                                if(cantidadDeKeys > 1){
+                                    //agrego la nueva disponibilidad
+                                    const segundaClave = Object.keys(horaResultante)[1]
+                                    const valorCorrespondiente2 = horaResultante[segundaClave]
+                                    postDisponibilidad(valorCorrespondiente2[0], valorCorrespondiente2[1], eventForm.recurringDef.typeData.daysOfWeek[0], eventForm.extendedProps.id_profesor)
+                                }
+                            }else{
+                                //elimina disponibilidad
+                                deleteData(eventForm.extendedProps.id)
+                            } 
+                        }
+
+                    }
+                        //CODIGO ELIMINAR DISPONIBILIDAD
+                        const deleteData = async (id: number) => {
+                            try {
+                                const response = await fetch('/api/disponibilidad', {
+                                    method: 'DELETE',
+                                    headers: {
+                                    'Content-Type': 'application/json', // Corregir la tipografía en "application/json"
+                                    },
+                                    body: JSON.stringify({ id }), // Envolvemos el ID en un objeto
+                                });
+                            
+                                if (response.ok) {
+                                    console.log('Disponibilidad eliminada');
+                                
+                                } else {
+                                    console.error('Error al eliminar');
+                                }
+                                } catch (error) {
+                                console.error('Error en la solicitud DELETE: ', error);
+                                }
+                            };
+                        //CODIGO EDITAR DISPONIBILIDAD
+                        const editarDisponibilidad = async (hora_inicio: string , hora_cierre: string, id: number) => {
+                            try {
+                              // Realiza la solicitud PUT
+                              const response = await fetch('/api/disponibilidad', {
+                                method: 'PUT',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                  hora_inicio: hora_inicio,
+                                  hora_cierre: hora_cierre,
+                                  id: id,
+                                }),
+                              });
+                          
+                              // Verifica si la solicitud fue exitosa
+                              if (response.ok) {
+                                const data = await response.json();
+                                console.log(data.mensaje); // Mensaje de éxito
+                              } else {
+                                const error = await response.json();
+                                console.error(error); // Maneja el error si la solicitud no fue exitosa
+                              }
+                            } catch (error) {
+                              console.error(error); // Maneja errores de red u otros errores
+                            }
+                            };
+                        //codigo AGREGAR DISPONIBLIDAD
+                        const postDisponibilidad = async (hora_inicio: string , hora_cierre: string, id_dia: number, id_profesor: number) => {
+                            try {
+                              const response = await fetch("/api/disponibilidad", {
+                                method: "POST",
+                                headers: {
+                                  "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    hora_inicio: hora_inicio,
+                                    hora_cierre: hora_cierre,
+                                    id_profesor: id_profesor,
+                                    id_dia: id_dia
+                                  }),
+                              });
+                        
+                              if (response.ok) {
+                                console.log("Disponibilidad creada exitosamente");
+                               
+                              } else {
+                                console.error("Error al crear la disponibilidad");
+                              }
+                            } catch (error) {
+                              console.error("Error en la solicitud POST:", error);
+                            }
+                            };
+                    //#CREAR ASISTENCIAS
+                    const crearAsistencias = async (idA:any) =>{
+                        const fechas = obtenerTodasLasFechas(eventForm.recurringDef.typeData.daysOfWeek[0])
+                        for (const fecha of fechas){
+                            
+                            await postAsistencia(eventForm.extendedProps.id_profesor, idA, fecha, false, true, hora.id_instrumento)
+                        }
+                    }
+                            //codigo CREAR ASISTENCIA
+                            const postAsistencia = async (id_profesor:number, id_alumno: number, fecha: string, asistio: boolean, pendiente: boolean, id_instrumento: number) => {
+                                try {
+                                  const response = await fetch("/api/asistencia", {
+                                    method: "POST",
+                                    headers: {
+                                      "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({
+                                        id_profesor : id_profesor,
+                                        id_alumno: id_alumno, 
+                                        fecha : fecha, 
+                                        asistio: asistio, 
+                                        pendiente: pendiente, 
+                                        id_instrumento: id_instrumento
+                                      }),
+                                  });
+                            
+                                  if (response.ok) {
+                                    console.log("Asistencia creada exitosamente");
+                                   
+                                  } else {
+                                    console.error("Error al crear la asistencia");
+                                  }
+                                } catch (error) {
+                                  console.error("Error en la solicitud POST:", error);
+                                }
+                                };
+
+
     return (
     <div>
         {clickEvent?
@@ -302,6 +512,7 @@ const CalendarioProfesor = () => {
             (
              <FullCalendar
                 initialDate={getNextWeekdayDate(0)}
+                eventClick = {handleEventClick}
                 hiddenDays={[0, 1]}
                 height="auto"
                 plugins={[timeGridPlugin]}
@@ -338,6 +549,7 @@ const CalendarioProfesor = () => {
             (
              <FullCalendar
                 initialDate={getNextWeekdayDate(0)}
+                eventClick = {handleEventClick}
                 hiddenDays={[0, 1, 2]}
                 height="auto"
                 plugins={[timeGridPlugin]}
@@ -374,6 +586,7 @@ const CalendarioProfesor = () => {
             (
              <FullCalendar
              initialDate={getNextWeekdayDate(0)}
+             eventClick = {handleEventClick}
                 hiddenDays={[0, 1, 2, 3]}
                 height="auto"
                 plugins={[timeGridPlugin]}
@@ -410,6 +623,7 @@ const CalendarioProfesor = () => {
             (
              <FullCalendar
              initialDate={getNextWeekdayDate(0)}
+             eventClick = {handleEventClick}
                 hiddenDays={[0, 1, 2, 3, 4]}
                 height="auto"
                 plugins={[timeGridPlugin]}

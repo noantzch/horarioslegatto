@@ -36,7 +36,8 @@ export const transformEventsforDisponibilidad2 = (inputEvents: DisponibilidadCal
             id_dia,
             hora_inicio,
             hora_cierre,
-            id
+            id,
+            id_profesor
         } = inputEvent;
 
         const outputEvent: OutputEvent2 = {
@@ -46,7 +47,8 @@ export const transformEventsforDisponibilidad2 = (inputEvents: DisponibilidadCal
             endTime: hora_cierre,
             extendedProps: {
                 subtitle:  `Prof. ${nombre_profesor}`,
-                id: id
+                id: id,
+                id_profesor: id_profesor
             },
         };
 

@@ -1,5 +1,7 @@
 
-
+::::::::::::::::REVISAR BOTONCES DE CONFIRMACION DE ASISTENCIA Y FILTRAR POR CLASES PASADAS!
+        AGREGAR AUTH PARA ASIGNAR CLASE
+        ACOMODAR CODIGO CALENDARIO PROFESOR
 ## AUTH CON CLERK
     -Instalar clerck y crear signin siginup archivos env 
         -incluir boton de clerck como boton de perfil
@@ -34,7 +36,7 @@
 ## ASIGNAR CLASE
         ->Consultar si es admin en asignar
         ->Desarrollar asignar clase
-
+YA FUNCIONAAAAA 
     .Asignar Clase:
 c       calendario con todas las disponibilidades con botón por día (5 calendarios)
         hacer click en la disponibilidad para plicar
@@ -43,7 +45,43 @@ c       calendario con todas las disponibilidades con botón por día (5 calenda
             se ingresa datos de alumno (UN ALUMNO PRO HORARIO, HABRAN ALUMNOS REPETIDOS)
                 MUCHA LOCIGA PARA GESTIONAR ESE FORMULARIO Y SWAL PARA CONFIRMAR
                 SEGUIR CON EL BACK
+                idea:       /* crear alumno
+                            nombre = hora.nombre
+                            apellido = hora.apellido
+                            id_instrumento = hora.id_instrumento
+                            
+                            obtener id alumno nuevo
 
+                        crear clase
+
+                            Id_profesor= eventForm.extendedProps.id_profesor
+                            Id_alumno= id obtenido
+                            Hora_inicio= hora.hora_inicio
+                            Hora_cierre= hora.hora_cierre
+                            Id_disponibilidad= eventForm.extendedProps.id
+                            Id_dia = eventForm.recurringDef.typeData.daysOfWeek[0]
+                            Id_instrumento = hora.id_instrumento
+
+                        actualizar disponibilidad
+                            uso  calcularHorasRestantes(hora: HorasObjeto): HorasResultantes | null 
+                                retorna horaResultante{}
+                            if(horaResultante.length > 1?){
+                                //ELIMINAR DISPONIBILIDAD Y CREAR 2 NUEVAS
+                                }else{
+                                    //ACTUALIZAR DISPONIBILIDAD
+                        }	
+                            
+                        crear asistencias
+
+                        arreglo con fechas de todos los días del año: obtenerTodasLasFechas(diaSemana: number)
+                            function Mapear(){
+                                    const fechas = obtenerTodasLasFechas(1)
+                                    fechas.map((fecha)=>{
+                            REALIZAR GET CADA VEZ CON LA FECHA NUEVA
+                                })
+                                }
+
+                        */
 
 
 
@@ -60,9 +98,14 @@ OJO CON EL DEPLOY QUE HAY QUE CAMBAIR EL FETCH
 
     ------------------------DATABASE:--------------------
     ::::TABLAS:::
+
     profesores(nombre:varchar100, apellido:varcahr100, id_disponiblidad:integer, id_instrumento:integer, admin:boolean)
+
     alumnos(nombre:string, apellido:string, id_instrumetno:integer)
+
     asistencias(id_alumno:integer, id_profesor:integer, asistió,:boolean fecha:date, pendiente: boolean)
+
+    
     disponibilidad(id_profesor:integer, id_dia:integer, hora_inicio:time, hora_cierre:time)
     clases(id_profesor:integer, id_alumno:integer, hora_inicio:time, hora_cierre:time, id_disponibilidad:integer, id_asistencia:integer)
     instrumentos(instrumento:string)

@@ -65,3 +65,31 @@ export async function POST(request: Request) {
       return NextResponse.json({ error }, { status: 500 });
     }
   } 
+  
+export async function PUT(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, hora_inicio, hora_cierre } = body;
+
+    // Verificar si se proporciona el ID y al menos uno de los campos de hora_inicio o hora_cierre
+    if (!id || (!hora_inicio && !hora_cierre)) {
+      return NextResponse.json({ mensaje: 'Se requiere el ID y al menos uno de los campos de hora_inicio o hora_cierre' }, { status: 400 });
+    }
+
+    // Actualizar la base de datos según los campos proporcionados
+    if (hora_inicio && hora_cierre) {
+      // Actualizar ambos campos
+      await sql`UPDATE Disponibilidad SET hora_inicio = ${hora_inicio}, hora_cierre = ${hora_cierre} WHERE id = ${id}`;
+    } else if (hora_inicio) {
+      // Actualizar solo el campo de hora_inicio
+      await sql`UPDATE Disponibilidad SET hora_inicio = ${hora_inicio} WHERE id = ${id}`;
+    } else {
+      // Actualizar solo el campo de hora_cierre
+      await sql`UPDATE Disponibilidad SET hora_cierre = ${hora_cierre} WHERE id = ${id}`;
+    }
+
+    return NextResponse.json({ mensaje: 'Disponibilidad actualizada exitosamente' }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
+}
