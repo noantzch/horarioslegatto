@@ -1,7 +1,6 @@
 
 ::::::::::::::::REVISAR BOTONCES DE CONFIRMACION DE ASISTENCIA Y FILTRAR POR CLASES PASADAS!
-        AGREGAR AUTH PARA ASIGNAR CLASE
-        ACOMODAR CODIGO CALENDARIO PROFESOR
+                    ACOMODAR CODIGO CALENDARIO PROFESOR
 ## AUTH CON CLERK
     -Instalar clerck y crear signin siginup archivos env 
         -incluir boton de clerck como boton de perfil
