@@ -166,7 +166,7 @@ const CalendarioProfesor = () => {
                     //#1 CREAR AL ALUMNO + POSTCLASE Y CREARASISTENCIA
                     const postAlumno = async () => {
                         try {
-                            const response = await fetch("http://localhost:3000/api/alumno", {
+                            const response = await fetch("https://horarioslegatto.vercel.app/api/alumno", {
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json",
@@ -201,7 +201,7 @@ const CalendarioProfesor = () => {
                                 id_instrumento: hora.id_instrumento
                             };
                             
-                            const response = await fetch("http://localhost:3000/api/clases", {
+                            const response = await fetch("https://horarioslegatto.vercel.app/api/clases", {
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json",
