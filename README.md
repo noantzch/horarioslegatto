@@ -1,5 +1,4 @@
 
-::::::::::::::::REVISAR BOTONCES DE CONFIRMACION DE ASISTENCIA Y FILTRAR POR CLASES PASADAS!
                     ACOMODAR CODIGO CALENDARIO PROFESOR
 ## AUTH CON CLERK
     -Instalar clerck y crear signin siginup archivos env 

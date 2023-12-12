@@ -12,7 +12,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Debes proporcionar un ID de profesor' }, { status: 400 });
     }
 
-    // Consulta SQL con el ID proporcionado
+    // Consulta SQL con el ID proporcionado y filtrado por fecha
     const asistenciasData = await sql`SELECT 
                               Asistencias.*, 
                               Alumnos.nombre, 
@@ -27,14 +27,14 @@ export async function GET(request: Request) {
                           WHERE 
                               Asistencias.id_profesor = ${id_profesor}
                               AND Asistencias.pendiente = false
-                              AND Asistencias.asistio = true;`;
+                              AND Asistencias.asistio = true
+                              AND Asistencias.fecha <= CURRENT_DATE;`;
     const clases = asistenciasData.rows;
 
     // Verificar si se encontraron resultados
     if (clases.length === 0) {
       return NextResponse.json({ resultado: 'No se encontraron asistencias pendientes' }, { status: 200 });
     }
-
 
     return NextResponse.json({ clases }, { status: 200 });
   } catch (error) {
