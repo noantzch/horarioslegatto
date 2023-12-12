@@ -26,8 +26,7 @@ export async function GET(request: Request) {
                               Instrumentos ON Asistencias.id_instrumento = Instrumentos.id
                           WHERE 
                               Asistencias.id_profesor = ${id_profesor}
-                              AND Asistencias.pendiente = false
-                              AND Asistencias.asistio = true
+                              AND Asistencias.pendiente = true
                               AND Asistencias.fecha <= CURRENT_DATE;`;
     const clases = asistenciasData.rows;
 
