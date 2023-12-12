@@ -18,6 +18,7 @@ export async function GET(request: Request) {
                                       JOIN Alumnos ON Asistencias.id_alumno = Alumnos.id
                                       WHERE Asistencias.id_profesor = ${id_profesor}
                                       AND Asistencias.pendiente = true;
+                                      AND Asistencias.fecha <= CURRENT_DATE
                                       `;
     const asistencias = asistenciasData.rows;
 
