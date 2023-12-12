@@ -82,7 +82,9 @@ interface OutputEvent3 {
   endTime: string;
   extendedProps: {
       subtitle: string;
-      id: number
+      id: number;
+      idProfesor: number;
+      idAlumno: number
   };
 }
 interface OutputEvent2 {

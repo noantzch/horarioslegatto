@@ -47,3 +47,25 @@ export async function POST(request: Request) {
       return NextResponse.json({ error }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id_profesor = searchParams.get('id_profesor');
+    const id_alumno = searchParams.get('id_alumno');
+
+    if (!id_profesor || !id_alumno) {
+      return NextResponse.json({ error: 'Debes proporcionar id_profesor e id_alumno' }, { status: 400 });
+    }
+
+    // Realizar la eliminación en la base de datos
+    await sql`DELETE FROM Asistencias
+              WHERE id_profesor = ${id_profesor}
+              AND id_alumno = ${id_alumno}
+              AND fecha > CURRENT_DATE`;
+
+    return NextResponse.json({ mensaje: 'Asistencia eliminada exitosamente' }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
+}

@@ -85,6 +85,7 @@ const CalendarioClases = () => {
                     setEventForm(eventInfo);
                 }
             };
+        
         const eliminarClase = async (id:number) => {
                 try {
                     const response = await fetch(`https://horarioslegatto.vercel.app/api/clases?id=${id}`, {
@@ -96,6 +97,7 @@ const CalendarioClases = () => {
             
                     if (response.ok) {
                         const data = await response.json();
+                        await eliminarAsistencias(eventForm.extendedProps.idProfesor, eventForm.extendedProps.idAlumno)
                         Swal.fire({
                             title: `Se eliminó la clase`,
                             confirmButtonText: "Confirmar",
@@ -112,7 +114,24 @@ const CalendarioClases = () => {
                     console.error(error);
                 }
             };
-            
+            const eliminarAsistencias = async (idProfesor:number, idAlumno:number) =>{
+                try {
+                    // Realiza la solicitud DELETE al endpoint correspondiente
+                    const response = await fetch(`/api/asistencia?id_profesor=${idProfesor}&id_alumno=${idAlumno}`, {
+                      method: 'DELETE',
+                    });
+              
+                    if (response.ok) {
+                      const data = await response.json();
+                      
+                    } else {
+                      const errorData = await response.json();
+                      
+                    }
+                  } catch (error) {
+                    console.error(error)
+                  }
+                };
       if(error){
         return <p className="text-center">No se asignaron clases todavía</p>
     }

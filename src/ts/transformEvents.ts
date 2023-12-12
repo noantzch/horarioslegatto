@@ -66,7 +66,9 @@ export const transformEvents3 = (inputEvents: Clase3[]): OutputEvent[] => {
             hora_cierre,
             instrumento,
             id,
-            nombre_profesor
+            nombre_profesor,
+            id_alumno,
+            id_profesor
         } = inputEvent;
 
         const outputEvent: OutputEvent3 = {
@@ -76,7 +78,9 @@ export const transformEvents3 = (inputEvents: Clase3[]): OutputEvent[] => {
             endTime: hora_cierre,
             extendedProps: {
                 subtitle: instrumento + " - Prof. " + nombre_profesor,
-                id: id
+                id: id,
+                idProfesor: id_profesor,
+                idAlumno: id_alumno
             },
         };
 
