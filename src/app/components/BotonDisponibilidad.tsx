@@ -71,7 +71,7 @@ const BotonDisponibilidad = () => {
       });
 
       if (response.ok) {
-        console.log("Disponibilidad creada exitosamente");
+        
         handleClick()
         window.location.reload();
       } else {

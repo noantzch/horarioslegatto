@@ -22,7 +22,7 @@ const [showForm, setShowForm] = useState<boolean>(false);
       });
   
       if (response.ok) {
-        console.log('Disponibilidad eliminada');
+       
         handleClick();
         window.location.reload();
       } else {

@@ -36,14 +36,11 @@ export async function POST(request: Request) {
         const body = await request.json();
         const usuario = body.data;
 
-        // Agrega un log para mostrar los datos del usuario antes de la inserción
-        console.log('Datos del usuario:', usuario);
+       
 
         await sql`INSERT INTO profesores (nombre, apellido, admin, user_clerk)
                 VALUES (${usuario.first_name}, ${usuario.last_name}, false, ${usuario.id})`;
 
-        // Agrega un log para indicar que la inserción se realizó con éxito
-        console.log('Profesor registrado con éxito.');
 
         return NextResponse.json({ mensaje: 'Profesor Registrado' }, { status: 201 });
     } catch (error) {

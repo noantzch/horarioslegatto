@@ -75,6 +75,16 @@ interface OutputEvent {
         subtitle: string;
     };
 }
+interface OutputEvent3 {
+  title: string;
+  daysOfWeek: number[];
+  startTime: string;
+  endTime: string;
+  extendedProps: {
+      subtitle: string;
+      id: number
+  };
+}
 interface OutputEvent2 {
   title: string;
   daysOfWeek: number[];
@@ -134,4 +144,21 @@ interface Asistencia{
   pendiente: boolean;
   id_instrumento: number
 
+}
+
+interface Clase3 {
+  id: number;
+  id_profesor: number;
+  id_alumno: number;
+  hora_inicio: string;
+  hora_cierre: string;
+  id_disponibilidad: number;
+  id_asistencia: number;
+  id_dia: number;
+  id_instrumento: number;
+  nombre_alumno: string;
+  apellido_alumno: string;
+  dia: string;
+  instrumento: string;
+  nombre_profesor: string;
 }

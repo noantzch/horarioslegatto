@@ -58,17 +58,22 @@ const Clases = () => {
     }, [id]); // Cambiado a un array vacío
     
     const agregarCampoMesCallback = useCallback(() => {
+      if(clasesPasadas){
         return agregarCampoMes(clasesPasadas);
+      }
       }, [clasesPasadas]);
     
       useEffect(() => {
         const claseMes = agregarCampoMesCallback();
-        setClasesMes(claseMes);
+        if(claseMes){
+          setClasesMes(claseMes);
+        }
 
       }, [agregarCampoMesCallback]);
 
 
       const meses: Record<number, AsistenciaMes[]> = {};
+
       const obtenerNombreMes = (mes: number) => {
         const mesesEnEspanol = [
           'Enero',
@@ -86,42 +91,49 @@ const Clases = () => {
         ];
         return mesesEnEspanol[mes - 1];
       };
-      clasesMes.forEach((asistencia) => {
-        const { mes } = asistencia;
-        if (!meses[mes]) {
-          meses[mes] = [];
-        }
-        meses[mes].push(asistencia);
-      });
+      if(clasesMes){
+        clasesMes.forEach((asistencia) => {
+          const { mes } = asistencia;
+          if (!meses[mes]) {
+            meses[mes] = [];
+          }
+          meses[mes].push(asistencia);
+        });
+      }
+      if (error) {
+        return <p className='text-center p-6'>No tiene clases pasadas</p>;
+      }
   return (
     <div>
-       { (id === null || id === undefined) || (clasesPasadas === null || clasesPasadas === undefined || clasesPasadas.length < 0) ? 
-          <Cargando /> 
-          : 
-          
-            Object.keys(meses).map((mes) => (
-            <div key={mes} className="mb-8">
-              <h2 className="text-2xl font-bold mb-4 p-1 m-2 text-center">{obtenerNombreMes(parseInt(mes, 10))}</h2>
-              <table className="min-w-full border border-gray-300">
-                <thead>
-                  <tr>
-                    <th className="border bg-gray-200 p-2">Alumno</th>
-                    <th className="border bg-gray-200 p-2">Fecha</th>
-                    <th className="border bg-gray-200 p-2">Instrumento</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {meses[parseInt(mes, 10)].map((element) => (
-                    <tr key={element.id}>
-                      <td className="border p-2">{`${element.nombre} ${element.apellido}`}</td>
-                      <td className="border p-2">{formatearFecha(element.fecha)}</td>
-                      <td className="border p-2">{element.instrumento}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-              ))
+       { (id === null || id === undefined) || (clasesPasadas === null || clasesPasadas === undefined || clasesPasadas.length < 0) ?
+                (clasesPasadas === null?
+                    (<Cargando />)
+                    :
+                    (<p className="text-center p-2 m-3">No tiene clases pasadas</p> ))
+                  : 
+                Object.keys(meses).map((mes) => (
+                    <div key={mes} className="mb-8">
+                      <h2 className="text-2xl font-bold mb-4 p-1 m-2 text-center">{obtenerNombreMes(parseInt(mes, 10))}</h2>
+                      <table className="min-w-full border border-gray-300">
+                        <thead>
+                          <tr>
+                            <th className="border bg-gray-200 p-2">Alumno</th>
+                            <th className="border bg-gray-200 p-2">Fecha</th>
+                            <th className="border bg-gray-200 p-2">Instrumento</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {meses[parseInt(mes, 10)].map((element) => (
+                            <tr key={element.id}>
+                              <td className="border p-2">{`${element.nombre} ${element.apellido}`}</td>
+                              <td className="border p-2">{formatearFecha(element.fecha)}</td>
+                              <td className="border p-2">{element.instrumento}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  ))
             
 
           }

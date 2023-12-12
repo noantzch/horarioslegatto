@@ -211,7 +211,7 @@ const CalendarioProfesor = () => {
                     
                             if (response.ok) {
                                 const data = await response.json(); // Convertir la respuesta a JSON
-                                console.log("Clase creada exitosamente");
+                               
                             } else {
                                 console.error("Error al crear la clase");
                             }
@@ -229,7 +229,7 @@ const CalendarioProfesor = () => {
                             // Obtener la cantidad de claves
                             const cantidadDeKeys = keysArray.length;
                            if(cantidadDeKeys > 0){
-                                console.log(horaResultante)
+                                
                                 //edito la disponibilidad
                                 const primeraClave = Object.keys(horaResultante)[0]
                                 const valorCorrespondiente = horaResultante[primeraClave]
@@ -260,7 +260,7 @@ const CalendarioProfesor = () => {
                                 });
                             
                                 if (response.ok) {
-                                    console.log('Disponibilidad eliminada');
+                                
                                 
                                 } else {
                                     console.error('Error al eliminar');
@@ -288,7 +288,7 @@ const CalendarioProfesor = () => {
                               // Verifica si la solicitud fue exitosa
                               if (response.ok) {
                                 const data = await response.json();
-                                console.log(data.mensaje); // Mensaje de éxito
+                                
                               } else {
                                 const error = await response.json();
                                 console.error(error); // Maneja el error si la solicitud no fue exitosa
@@ -314,7 +314,7 @@ const CalendarioProfesor = () => {
                               });
                         
                               if (response.ok) {
-                                console.log("Disponibilidad creada exitosamente");
+                          
                                
                               } else {
                                 console.error("Error al crear la disponibilidad");
@@ -350,7 +350,7 @@ const CalendarioProfesor = () => {
                                   });
                             
                                   if (response.ok) {
-                                    console.log("Asistencia creada exitosamente");
+                                 
                                    
                                   } else {
                                     console.error("Error al crear la asistencia");

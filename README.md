@@ -1,5 +1,4 @@
-
-                    ACOMODAR CODIGO CALENDARIO PROFESOR
+## AGREGAR CALENDARIO CLASES PARA ELIMINAR!!
 ## AUTH CON CLERK
     -Instalar clerck y crear signin siginup archivos env 
         -incluir boton de clerck como boton de perfil

@@ -25,7 +25,7 @@ const PendientesButton: React.FC<PendientesButtonProps> = ({ asistencia }) => {
 
       // Puedes hacer algo con la respuesta si es necesario
       const data = await response.json();
-      console.log(data);
+     
       window.location.reload();
     } catch (error) {
       console.error('Error:', error);
