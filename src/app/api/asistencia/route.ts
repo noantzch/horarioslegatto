@@ -60,9 +60,10 @@ export async function DELETE(request: Request) {
 
     // Realizar la eliminación en la base de datos
     await sql`DELETE FROM Asistencias
-              WHERE id_profesor = ${id_profesor}
-              AND id_alumno = ${id_alumno}
-              AND fecha > CURRENT_DATE`;
+            WHERE id_profesor = ${id_profesor}
+            AND id_alumno = ${id_alumno}
+            AND fecha > CURRENT_DATE
+            AND pendiente = true`;
 
     return NextResponse.json({ mensaje: 'Asistencia eliminada exitosamente' }, { status: 200 });
   } catch (error) {
