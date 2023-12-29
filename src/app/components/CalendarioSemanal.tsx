@@ -101,9 +101,29 @@ const CalendarioSemanal = () => {
 
     //dejar solo clases por semana
     useEffect(() => {
-        const filtracionDeClases = filtrarClasesUnicas(clases);
-        setClasesUnicas(filtracionDeClases)
+      // Verificar si 'clases' es un arreglo
+      if (!Array.isArray(clases)) {
+        console.error('El parámetro clases debe ser un arreglo de clases.');
+        return;
+      }
+    
+      // Verificar si cada elemento en 'clases' es un objeto con las propiedades necesarias
+      for (const clase of clases) {
+        if (
+          typeof clase !== 'object' ||
+          typeof clase.dia !== 'string' ||
+          typeof clase.hora_inicio !== 'string' ||
+          typeof clase.hora_cierre !== 'string'
+        ) {
+          console.error('Cada elemento en el arreglo debe ser un objeto con propiedades dia, hora_inicio y hora_cierre.');
+          return;
+        }
+      }
+    
+      const filtracionDeClases = filtrarClasesUnicas(clases);
+      setClasesUnicas(filtracionDeClases);
     }, [clases]);
+    
     //formatear para fullcalendar calses
     useEffect(() => {
         if(clasesUnicas && clasesUnicas.length > 0){
