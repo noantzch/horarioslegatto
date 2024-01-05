@@ -182,7 +182,7 @@ const CalendarioClases = () => {
                                 events = {events}
                                 initialView = 'timeGridOneDay'
                                 views = {{timeGridOneDay: {type: 'timeGrid',duration: { days: 1 }}}}
-                                slotDuration="00:30:00"
+                                slotDuration="00:20:00"
                                 allDaySlot={false}
                                 slotMinTime = {'09:00'}
                                 slotMaxTime = {'21:00'}
@@ -251,7 +251,7 @@ const CalendarioClases = () => {
                                 events = {events}
                                 initialView = 'timeGridOneDay'
                                 views = {{timeGridOneDay: {type: 'timeGrid',duration: { days: 1 }}}}
-                                slotDuration="00:30:00"
+                                slotDuration="00:20:00"
                                 allDaySlot={false}
                                 slotMinTime = {'09:00'}
                                 slotMaxTime = {'21:00'}
@@ -320,7 +320,7 @@ const CalendarioClases = () => {
                                 events = {events}
                                 initialView = 'timeGridOneDay'
                                 views = {{timeGridOneDay: {type: 'timeGrid',duration: { days: 1 }}}}
-                                slotDuration="00:30:00"
+                                slotDuration="00:20:00"
                                 allDaySlot={false}
                                 slotMinTime = {'09:00'}
                                 slotMaxTime = {'21:00'}
@@ -389,7 +389,7 @@ const CalendarioClases = () => {
                                 events = {events}
                                 initialView = 'timeGridOneDay'
                                 views = {{timeGridOneDay: {type: 'timeGrid',duration: { days: 1 }}}}
-                                slotDuration="00:30:00"
+                                slotDuration="00:20:00"
                                 allDaySlot={false}
                                 slotMinTime = {'09:00'}
                                 slotMaxTime = {'21:00'}
@@ -457,7 +457,7 @@ const CalendarioClases = () => {
                                 events = {events}
                                 initialView = 'timeGridOneDay'
                                 views = {{timeGridOneDay: {type: 'timeGrid',duration: { days: 1 }}}}
-                                slotDuration="00:30:00"
+                                slotDuration="00:20:00"
                                 allDaySlot={false}
                                 slotMinTime = {'09:00'}
                                 slotMaxTime = {'21:00'}
