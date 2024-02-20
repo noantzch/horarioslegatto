@@ -491,7 +491,7 @@ const CalendarioProfesor = () => {
                 locale={esLocale}
                 eventContent={(eventInfo) => (
                     <>
-            <div style={{ width: 'auto', margin: '0 auto' }}>
+            <div style={{ width: '1em', margin: '0 auto' }}>
                 <p className="text-xs">{eventInfo.timeText}</p>
                 <p className="text-xs">{eventInfo.event.title}</p>
                 <p className="text-xs">{eventInfo.event.extendedProps.subtitle}</p>
@@ -530,7 +530,7 @@ const CalendarioProfesor = () => {
                 locale={esLocale}
                 eventContent={(eventInfo) => (
                     <>
-                    <div style={{ width: 'auto', margin: '0 auto' }}>
+                    <div style={{ width: '1em', margin: '0 auto' }}>
                         <p className="text-xs">{eventInfo.timeText}</p>
                         <p className="text-xs">{eventInfo.event.title}</p>
                         <p className="text-xs">{eventInfo.event.extendedProps.subtitle}</p>
@@ -569,7 +569,7 @@ const CalendarioProfesor = () => {
                 locale={esLocale}
                 eventContent={(eventInfo) => (
                     <>
-                    <div style={{ width: 'auto', margin: '0 auto' }}>
+                    <div style={{ width: '1em', margin: '0 auto' }}>
                         <p className="text-xs">{eventInfo.timeText}</p>
                         <p className="text-xs">{eventInfo.event.title}</p>
                         <p className="text-xs">{eventInfo.event.extendedProps.subtitle}</p>
@@ -608,7 +608,7 @@ const CalendarioProfesor = () => {
                 locale={esLocale}
                 eventContent={(eventInfo) => (
                     <>
-                    <div style={{ width: 'auto', margin: '0 auto' }}>
+                    <div style={{ width: '1em', margin: '0 auto' }}>
                         <p className="text-xs">{eventInfo.timeText}</p>
                         <p className="text-xs">{eventInfo.event.title}</p>
                         <p className="text-xs">{eventInfo.event.extendedProps.subtitle}</p>
@@ -647,7 +647,7 @@ const CalendarioProfesor = () => {
                 locale={esLocale}
                 eventContent={(eventInfo) => (
                     <>
-                    <div style={{ width: 'auto', margin: '0 auto' }}>
+                    <div style={{ width: '1em', margin: '0 auto' }}>
                         <p className="text-xs">{eventInfo.timeText}</p>
                         <p className="text-xs">{eventInfo.event.title}</p>
                         <p className="text-xs">{eventInfo.event.extendedProps.subtitle}</p>
