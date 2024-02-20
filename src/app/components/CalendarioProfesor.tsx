@@ -199,8 +199,8 @@ const CalendarioProfesor = () => {
                             });
                         
                             if (response.ok) {
-                            
-                            
+                                window.location.reload();
+                                
                             } else {
                                 console.error('Error al eliminar');
                             }
@@ -474,9 +474,9 @@ const CalendarioProfesor = () => {
                                         )}
                                         />
                                 </div>
-                                <button className="bg-green-400 p-2">Asignar Clase</button>
+                                <button className="bg-green-400 p-2 m-2">Asignar Clase</button>
                             </form>
-                                <button className="bg-red-400 ´p-2" onClick={()=> eliminarDisponibilidad(eventForm.extendedProps.id)}>Eliminar Disponibilidad</button>
+                                <button className="bg-red-400 p-2 m-2" onClick={()=> eliminarDisponibilidad(eventForm.extendedProps.id)}>Eliminar esta Disponibilidad</button>
                     </div>)
                     :
                     (<p>Cargando...</p>)}
