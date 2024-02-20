@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.small-event {
-    font-size: 10px; /* Puedes ajustar este valor según tus necesidades */
-    /* Otros estilos que desees aplicar */
-}
+.fc-timegrid-event-harness-inset {
+    max-width: 4.6em;
+  }

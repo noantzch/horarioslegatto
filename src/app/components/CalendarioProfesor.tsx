@@ -528,8 +528,7 @@ const CalendarioProfesor = () => {
                 headerToolbar={false}
                 dayHeaderFormat={{ weekday: 'long' }}
                 locale={esLocale}
-                eventClassNames="small-event"
-    eventContent={(eventInfo) => (
+                    eventContent={(eventInfo) => (
         <>
             <p className="text-xs">{eventInfo.timeText}</p>
             <p className="text-xs">{eventInfo.event.title}</p>
@@ -566,8 +565,7 @@ const CalendarioProfesor = () => {
                 headerToolbar={false}
                 dayHeaderFormat={{ weekday: 'long' }}
                 locale={esLocale}
-                eventClassNames="small-event"
-    eventContent={(eventInfo) => (
+                    eventContent={(eventInfo) => (
         <>
             <p className="text-xs">{eventInfo.timeText}</p>
             <p className="text-xs">{eventInfo.event.title}</p>
@@ -604,13 +602,12 @@ const CalendarioProfesor = () => {
                 headerToolbar={false}
                 dayHeaderFormat={{ weekday: 'long' }}
                 locale={esLocale}
-                eventClassNames="small-event"
-    eventContent={(eventInfo) => (
-        <>
-            <p className="text-xs">{eventInfo.timeText}</p>
-            <p className="text-xs">{eventInfo.event.title}</p>
-            <p className="text-xs">{eventInfo.event.extendedProps.subtitle}</p>
-        </>
+                eventContent={(eventInfo) => (
+                    <>
+                        <p className="text-xs">{eventInfo.timeText}</p>
+                        <p className="text-xs">{eventInfo.event.title}</p>
+                        <p className="text-xs">{eventInfo.event.extendedProps.subtitle}</p>
+                    </>
     )}
             />)
             :
@@ -642,8 +639,7 @@ const CalendarioProfesor = () => {
                 headerToolbar={false}
                 dayHeaderFormat={{ weekday: 'long' }}
                 locale={esLocale}
-                eventClassNames="small-event"
-    eventContent={(eventInfo) => (
+                    eventContent={(eventInfo) => (
         <>
             <p className="text-xs">{eventInfo.timeText}</p>
             <p className="text-xs">{eventInfo.event.title}</p>
