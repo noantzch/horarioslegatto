@@ -2,5 +2,5 @@
 @tailwind components;
 @tailwind utilities;
 .fc-timegrid-event-harness-inset {
-    max-width: 4.6em;
+    max-width: 6em;
   }
