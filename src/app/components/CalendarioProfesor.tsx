@@ -187,6 +187,29 @@ const CalendarioProfesor = () => {
                             console.error("Error en la solicitud POST:", error);
                         }
                     };
+                    //Eliminar disponibilidad
+                    const eliminarDisponibilidad = async (id:any) => {
+                        try {
+                            const response = await fetch('/api/disponibilidad', {
+                                method: 'DELETE',
+                                headers: {
+                                'Content-Type': 'application/json', // Corregir la tipografía en "application/json"
+                                },
+                                body: JSON.stringify({ id }), // Envolvemos el ID en un objeto
+                            });
+                        
+                            if (response.ok) {
+                            
+                            
+                            } else {
+                                console.error('Error al eliminar');
+                            }
+                            } catch (error) {
+                            console.error('Error en la solicitud DELETE: ', error);
+                            }
+                        };
+                
+
                     //#2 CREAR LA CLASE
                     const postClase = async (idA:any) => {
                         try {
@@ -453,6 +476,7 @@ const CalendarioProfesor = () => {
                                 </div>
                                 <button className="bg-green-400 p-2">Asignar Clase</button>
                             </form>
+                                <button className="bg-red-400 ´p-2" onClick={()=> eliminarDisponibilidad(eventForm.extendedProps.id)}>Eliminar Disponibilidad</button>
                     </div>)
                     :
                     (<p>Cargando...</p>)}
