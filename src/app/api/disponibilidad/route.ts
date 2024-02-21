@@ -20,11 +20,13 @@ export async function GET(request: Request) {
     } else {
       // Consulta para todas las filas sin excepción
       disponibilidadData = await sql`SELECT Disponibilidad.*,
-                                      Profesores.nombre AS nombre_profesor,
-                                      Dias.dia
-                                      FROM Disponibilidad
-                                      JOIN Profesores ON Disponibilidad.id_profesor = Profesores.id
-                                      JOIN Dias ON Disponibilidad.id_dia = Dias.id`;
+      Profesores.nombre AS nombre_profesor,
+      Profesores.apellido AS apellido_profesor,
+      Dias.dia
+      FROM Disponibilidad
+      JOIN Profesores ON Disponibilidad.id_profesor = Profesores.id
+      JOIN Dias ON Disponibilidad.id_dia = Dias.id`;
+
     }
 
     const disponibilidad = disponibilidadData.rows;
