@@ -113,7 +113,8 @@ interface DisponibilidadCalendario {
   hora_inicio: string;
   hora_cierre: string;
   id_profesor: number;
-  nombre_profesor: string
+  nombre_profesor: string;
+  apellido_profesor: string;
 }
 
 interface Profesores {

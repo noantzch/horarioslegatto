@@ -33,6 +33,7 @@ export const transformEventsforDisponibilidad2 = (inputEvents: DisponibilidadCal
     inputEvents.forEach((inputEvent) => {
         const {
             nombre_profesor,
+            apellido_profesor,
             id_dia,
             hora_inicio,
             hora_cierre,
@@ -46,7 +47,7 @@ export const transformEventsforDisponibilidad2 = (inputEvents: DisponibilidadCal
             startTime: hora_inicio,
             endTime: hora_cierre,
             extendedProps: {
-                subtitle:  `Prof. ${nombre_profesor} HAHAHA`,
+                subtitle:  `Prof. ${nombre_profesor} ${apellido_profesor}`,
                 id: id,
                 id_profesor: id_profesor
             },
