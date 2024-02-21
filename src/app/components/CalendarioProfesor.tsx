@@ -78,6 +78,7 @@ const CalendarioProfesor = () => {
                 // Asegurarse de que eventId es un valor válido antes de establecerlo
                     if (eventInfo) {
                         setEventForm(eventInfo);
+                        console.log(eventInfo)
                     }
                 };
             
