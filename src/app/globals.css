@@ -3,7 +3,7 @@
 @tailwind utilities;
 .fc-timegrid-event-harness-inset {
     max-width: 6em;
-  }
-  .fc-timegrid-event-harness.ProfNoelAntezanaundefined {
+}
+.ProfNoelAntezanaundefined {
     background-color: orange !important;
   }
