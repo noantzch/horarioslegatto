@@ -54,3 +54,6 @@
   background-color: rgb(74, 71, 164) !important;
   height: 100% !important;
 }
+.text-xs{
+  text-shadow: 3px 3px 8px black !important;
+}
