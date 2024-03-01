@@ -515,7 +515,7 @@ const CalendarioProfesor = () => {
                 locale={esLocale}
                 eventContent={(eventInfo) => (
                     <>
-            <div style={{ width: 'auto', margin: '0 auto' }}>
+            <div style={{ width: 'auto', margin: '0 auto' }}  className={`${eventInfo.event.extendedProps.subtitle.replace(/[\s.]/g, '')}`}>
                 <p className="text-xs">{eventInfo.timeText}</p>
                 <p className="text-xs">{eventInfo.event.title}</p>
                 <p className="text-xs">{eventInfo.event.extendedProps.subtitle}</p>
@@ -553,11 +553,11 @@ const CalendarioProfesor = () => {
                 dayHeaderFormat={{ weekday: 'long' }}
                 locale={esLocale}
                     eventContent={(eventInfo) => (
-        <>
+        <div  className={`${eventInfo.event.extendedProps.subtitle.replace(/[\s.]/g, '')}`}>
             <p className="text-xs">{eventInfo.timeText}</p>
             <p className="text-xs">{eventInfo.event.title}</p>
             <p className="text-xs">{eventInfo.event.extendedProps.subtitle}</p>
-        </>
+        </div>
     )}
             />)
             :
@@ -590,11 +590,11 @@ const CalendarioProfesor = () => {
                 dayHeaderFormat={{ weekday: 'long' }}
                 locale={esLocale}
                     eventContent={(eventInfo) => (
-        <>
+        <div  className={`${eventInfo.event.extendedProps.subtitle.replace(/[\s.]/g, '')}`}>
             <p className="text-xs">{eventInfo.timeText}</p>
             <p className="text-xs">{eventInfo.event.title}</p>
             <p className="text-xs">{eventInfo.event.extendedProps.subtitle}</p>
-        </>
+        </div>
     )}
             />)
             :
@@ -627,11 +627,11 @@ const CalendarioProfesor = () => {
                 dayHeaderFormat={{ weekday: 'long' }}
                 locale={esLocale}
                 eventContent={(eventInfo) => (
-                    <>
+                    <div  className={`${eventInfo.event.extendedProps.subtitle.replace(/[\s.]/g, '')}`}>
                         <p className="text-xs">{eventInfo.timeText}</p>
                         <p className="text-xs">{eventInfo.event.title}</p>
                         <p className="text-xs">{eventInfo.event.extendedProps.subtitle}</p>
-                    </>
+                    </div>
     )}
             />)
             :
@@ -664,11 +664,11 @@ const CalendarioProfesor = () => {
                 dayHeaderFormat={{ weekday: 'long' }}
                 locale={esLocale}
                     eventContent={(eventInfo) => (
-        <>
+        <div  className={`${eventInfo.event.extendedProps.subtitle.replace(/[\s.]/g, '')}`}>
             <p className="text-xs">{eventInfo.timeText}</p>
             <p className="text-xs">{eventInfo.event.title}</p>
             <p className="text-xs">{eventInfo.event.extendedProps.subtitle}</p>
-        </>
+        </div>
     )}
             />)
             :
