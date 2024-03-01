@@ -4,6 +4,6 @@
 .fc-timegrid-event-harness-inset {
     max-width: 6em;
   }
-.ProfNoelAntezanaundefined{
-  background-color: orange !important;
-}
+  .fc-timegrid-event-harness > .ProfNoelAntezanaundefined {
+    background-color: orange !important;
+  }
