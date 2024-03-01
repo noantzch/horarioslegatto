@@ -514,6 +514,7 @@ const CalendarioProfesor = () => {
                 headerToolbar={false}
                 dayHeaderFormat={{ weekday: 'long' }}
                 locale={esLocale}
+                eventClassNames={(arg) => `subtitle-${arg.event.extendedProps.subtitle}`}
                 eventContent={(eventInfo) => (
                     <>
             <div style={{ width: 'auto', margin: '0 auto' }}>
