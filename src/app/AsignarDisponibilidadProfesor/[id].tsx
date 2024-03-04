@@ -4,17 +4,17 @@ import Cargando from '../components/Cargando';
 import Link from "next/link"
 import { useUser } from "@clerk/nextjs"
 import { useRouter } from 'next/router';
-const AsignarDisponibilidadId = () =>{
+const AsignarDisponibilidadProfesor = () =>{
     const user = useUser()
     const router = useRouter();
-
+    const {id}= router.query;
 if(user.isLoaded){
     if(user.user){
       if(user.user.organizationMemberships.length){
   return (
 
     <div>
-        <h1>calendario de id:</h1>
+        <h1>calendario de id:{id}</h1>
     </div>
     )
 }else{
@@ -31,3 +31,4 @@ return <Cargando />
 
 }
 
+export default AsignarDisponibilidadProfesor;
