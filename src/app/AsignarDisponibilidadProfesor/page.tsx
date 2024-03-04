@@ -7,14 +7,14 @@ import { useRouter } from 'next/router';
 const AsignarDisponibilidadId = () =>{
     const user = useUser()
     const router = useRouter();
-    const { id } = router.query;
+
 if(user.isLoaded){
     if(user.user){
       if(user.user.organizationMemberships.length){
   return (
 
     <div>
-        <h1>calendario de id: {id}</h1>
+        <h1>calendario de id:</h1>
     </div>
     )
 }else{
