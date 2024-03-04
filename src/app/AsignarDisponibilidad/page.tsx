@@ -1,11 +1,14 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import Cargando from '../components/Cargando';
+import Link from "next/link"
+import { useUser } from "@clerk/nextjs"
 
 const AsignarDisponibilidad = () => {
-  const [profesores, setProfesores] = useState<any[]>([]);
+    const user = useUser()
+    const [profesores, setProfesores] = useState<any[]>([]);
 
-  useEffect(() =>{
+    useEffect(() =>{
     const fetchData =async () => {
         try{
             const resposne = await fetch(`https://horarioslegatto.vercel.app/api/profesores`)
@@ -21,27 +24,39 @@ const AsignarDisponibilidad = () => {
     fetchData()
 }, [])
 
-  const handleItemClick = (id: number) => {
-    // Acción al hacer clic en un profesor (puedes cambiar esto según tus necesidades)
-    alert(`Hiciste clic en el profesor con ID: ${id}`);
-  };
-
+if(user.isLoaded){
+    if(user.user){
+      if(user.user.organizationMemberships.length){
   return (
-    <div>
-    <h4>Lista de Profesores</h4>
-    {profesores ?
-    <ul>
-        {profesores.map((profesor) => (
-            <li key={profesor.id} onClick={() => handleItemClick(profesor.id)}>
-            {profesor.nombre}
-            </li>
-            ))}
-    </ul>
-    :
+    <div className="text-center">
+    <h4 className="mb-4">Lista de Profesores</h4>
+        {profesores ? (
+            <ul>
+                {profesores.map((profesor) => (
+                    <Link
+                        href={`/AsignarDisponibilidad/${profesor.id}`}
+                        key={profesor.id}
+                        className="cursor-pointer hover:underline hover:shadow-md"
+                    >
+                        {profesor.nombre}
+                    </Link>
+                ))}
+            </ul>
+        ) : (
             <Cargando />
+        )}
+        </div>
+        )
+    }else{
+            
+        return(
+        <h2 className="text-center p-2 ">Solo administradores pueden asignar clase</h2>
+        )
     }
-    </div>
-  );
-};
+    }
+    }else{
+    return <Cargando />
+    }
+}
 
 export default AsignarDisponibilidad;
