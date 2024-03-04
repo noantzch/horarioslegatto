@@ -36,7 +36,9 @@ const Navbar = () => {
                     <Link href="/Asignar">
                         <li className="ml-10 mt-2 suppercase hover:border-b text-lg" title="Sólo administradores pueden asignar clases">Asignar Clase*</li>
                     </Link>
-
+                    <Link href="/AsignarDisponibilidad">
+                        <li className="ml-10 mt-2 suppercase hover:border-b text-lg" title="Sólo administradores pueden asignar disponibilidad a otro profesor">Asignar Disponibilidad*</li>
+                    </Link>
                     <li className="ml-10 mt-2 suppercase hover:border-b text-lg">  
                         <UserButton />
                     </li>
@@ -68,6 +70,9 @@ const Navbar = () => {
                     </Link>
                     <Link href="/Asignar">
                         <li onClick={() =>{ setMenuOpen(false)}} className="py-4 cursor-pointer">Asignar Clase</li>
+                    </Link>
+                    <Link href="/AsignarDisponibilidad">
+                        <li onClick={() =>{ setMenuOpen(false)}} className="py-4 cursor-pointer">Asignar Disponibilidad</li>
                     </Link>
                     <li className="py-4 cursor-pointer">  
                         <UserButton />
