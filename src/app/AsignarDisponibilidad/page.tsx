@@ -52,7 +52,7 @@ if(user.isLoaded){
     }else{
             
         return(
-        <h2 className="text-center p-2 ">Solo administradores pueden asignar clase</h2>
+        <h2 className="text-center p-2 ">Solo administradores pueden asignar disponibilidades a otro profesor</h2>
         )
     }
     }
