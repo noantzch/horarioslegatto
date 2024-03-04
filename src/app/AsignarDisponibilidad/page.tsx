@@ -30,22 +30,24 @@ if(user.isLoaded){
   return (
     <div className="text-center">
     <h4 className="mb-4">Lista de Profesores</h4>
-        {profesores ? (
-            <ul>
-                {profesores.map((profesor) => (
+    {profesores ? (
+        <ul className="space-y-2"> {/* Agregado space-y-2 para añadir espacio vertical entre elementos */}
+            {profesores.map((profesor) => (
+                <li key={profesor.id} className="mb-2"> {/* Agregado mb-2 para añadir margen inferior entre elementos */}
                     <Link
-                        href={`/AsignarDisponibilidad/${profesor.id}`}
-                        key={profesor.id}
-                        className="cursor-pointer hover:underline hover:shadow-md"
+                        href={`/AsignarDisponibilidadProfesor/${profesor.id}`}
+                        className="block cursor-pointer hover:underline hover:shadow-md"
                     >
                         {profesor.nombre}
                     </Link>
-                ))}
-            </ul>
-        ) : (
-            <Cargando />
-        )}
-        </div>
+                </li>
+            ))}
+        </ul>
+    ) : (
+        <Cargando />
+    )}
+</div>
+
         )
     }else{
             
